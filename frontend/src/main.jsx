@@ -1,10 +1,31 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import Temp from './Temp.jsx'
+import Layout from './components/layout'
 import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+const router = createBrowserRouter([
+	{
+		element: <Layout />,
+		children: [
+			{
+				path: '/',
+				element: <Temp />,
+				index: true,
+			},
+			{
+				path: '/analytics',
+				element: <App />,
+			},
+		],
+	},
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-    <App />
-  // </React.StrictMode>,
+	// <React.StrictMode>
+	<RouterProvider router={router}>{/* <App /> */}</RouterProvider>
+	// <App />
+	// </React.StrictMode>,
 )

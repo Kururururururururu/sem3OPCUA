@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 80
 
 app.use(express.static(path.resolve(process.cwd(), '../frontend/dist')))
 
-/*
+app.get('/api', (req, res) => {
 	res.setHeader('Cache-Control', 'no-cache')
 	res.setHeader('Content-Type', 'text/event-stream')
 	res.setHeader('Access-Control-Allow-Origin', '*')
@@ -23,9 +23,7 @@ app.use(express.static(path.resolve(process.cwd(), '../frontend/dist')))
 		clearInterval(interval)
 		res.end()
 	})
-
-	send data til clienten med res.write() ?:)
-*/
+})
 
 app.listen(PORT, function () {
 	console.log(`Server listening on port ${PORT}`)

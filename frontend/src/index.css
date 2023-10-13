@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+progress::-webkit-progress-bar {
+    @apply bg-gray-500;
+}
+
+progress::-webkit-progress-value {
+    @apply bg-green-500;
+}
