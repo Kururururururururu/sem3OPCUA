@@ -9,3 +9,11 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
     @apply bg-green-500;
 }
+
+progress[value]::-webkit-progress-bar {
+    border-radius: 40px;
+}
+
+progress[value]::-webkit-progress-value {
+    border-radius: 40px;
+}
