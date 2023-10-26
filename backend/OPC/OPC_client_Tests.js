@@ -1,5 +1,12 @@
 const OPCUAClient = require('./OPC_client')
 
-OPCUAClient.connect().then(() => {OPCUAClient.disconnect()})
+
+async function main(){
+    await OPCUAClient.connect()
+    await OPCUAClient.read('temperature')
+    await OPCUAClient.disconnect()
+}
+
+main()
 
 

@@ -22,26 +22,32 @@ module.exports = {
 		}		
 	},
 
-	read: async (nodeIds)=> {
-		try {
-			const browseResults = await session.browse(nodeIds);
-			const nodesToRead = [];
-			browseResults.forEach((result) => {
-				result.references.forEach((reference) => {
-					nodesToRead.push({
-						nodeId: reference.nodeId,
-						attributeId: opcua.AttributeIds.Value,
-					});
-				});
-			});
-			const dataValues = await session.read(nodesToRead);
-			return dataValues.map((dataValue) => dataValue.value.value);
-		} catch (err) {
-			if (err instanceof Error) {
-				console.log(err.message);
-			}
+	read: async (VariableName)=> {
+
+		const variables = [
+			{ name: 'Temperature', path: 'ns=6;s=::Program:Data.Value.Temperature' },
+			{ name: 'StateCurrent', path: 'ns=6;s=::Program:Cube.Status.StateCurrent' },
+			{ name: 'Vibration', path: 'ns=6;s=::Program:Data.Value.Vibration' },
+			{ name: 'Barley', path: 'ns=6;s=::Program:Inventory.Barley' },
+			{ name: 'Hops', path: 'ns=6;s=::Program:Inventory.Hops' },
+			{ name: 'Malt', path: 'ns=6;s=::Program:Inventory.Malt' },
+			{ name: 'Wheat', path: 'ns=6;s=::Program:Inventory.Wheat' },
+			{ name: 'Yeast', path: 'ns=6;s=::Program:Inventory.Yeast' },
+			{ name: 'FillingInventory', path: 'ns=6;s=::Program:FillingInventory' },
+			{ name: 'Counter', path: 'ns=6;s=::Program:Maintenance.Counter' },
+			{ name: 'State', path: 'ns=6;s=::Program:Maintenance.State'}
+		]
+
+		const variable = variables.find(v => v.name === VariableName)
+		if (variable) {
+  			const value = await session.readVariableValue(variable.path)
+  			console.log(`${variable.name}: ${value.value.value}`)
+		} else {
+  			console.error(`Variable ${VariableName} not found`)
 		}
 	},
+
+		
 	write: async (nodeId, value)=> {
 
 	},
