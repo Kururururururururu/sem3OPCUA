@@ -1,25 +1,65 @@
-import { OPCUAClient } from 'node-opcua-client'
-async function main() {
-	try {
-		const endpointUrl2 = 'opc.tcp://localhost:4840'
-		const client = OPCUAClient.create({
-			endpointMustExist: false,
-		})
-		await client.connect(endpointUrl2).then(() => console.log('Session created!'))
-		const session = await client.createSession()
+const { OPCUAClient } = require('node-opcua-client')
 
-		const nodeId = 'ns=6;s=::Program:Cube.Status.StateCurrent'
-		const dataValue = await session.read({ nodeId })
 
-		console.log(`Value: ${dataValue.value.value}`)
+let session; // OPC session
+let client; // OPC client
 
-		await session.close()
-		await client.disconnect()
-	} catch (err) {
-		if (err instanceof Error) {
-			console.log(err.message)
+module.exports = {
+	connect: async ()=> { 
+		try {
+			const endpointUrl2 = 'opc.tcp://localhost:4840'
+			client = OPCUAClient.create({
+				endpointMustExist: false,
+			})
+			await client.connect(endpointUrl2).then(() => console.log('Session created!'))
+			session = await client.createSession()
+			
+	
+		} catch (err) {
+			if (err instanceof Error) {
+				console.log(err.message)
+			}
+		}		
+	},
+
+	read: async (nodeIds)=> {
+		try {
+			const browseResults = await session.browse(nodeIds);
+			const nodesToRead = [];
+			browseResults.forEach((result) => {
+				result.references.forEach((reference) => {
+					nodesToRead.push({
+						nodeId: reference.nodeId,
+						attributeId: opcua.AttributeIds.Value,
+					});
+				});
+			});
+			const dataValues = await session.read(nodesToRead);
+			return dataValues.map((dataValue) => dataValue.value.value);
+		} catch (err) {
+			if (err instanceof Error) {
+				console.log(err.message);
+			}
 		}
-		process.exit(0)
-	}
+	},
+	write: async (nodeId, value)=> {
+
+	},
+
+	disconnect: async ()=> {
+		try {
+			await session.close()
+			await client.disconnect()
+			console.log('Session closed!')
+		} catch (err) {
+			if (err instanceof Error) {
+				console.log(err.message)
+			}
+			process.exit(0)
+		}
+	},
+	
 }
-main()
+
+
+
