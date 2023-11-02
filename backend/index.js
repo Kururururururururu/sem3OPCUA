@@ -48,7 +48,7 @@ app.post('/pass-to-queue', (req, res) => {
 	beer_type = products.find(v => v.type == req.body.type).id	// search map where beer type equals product
 	beer_amount = req.body.amount
 
-	if (OPC_client.brew(beer_type, beer_amount)){	// send beer type request to queue
+	if (opcuaClient.brew(beer_type, beer_amount)){	// send beer type request to queue
 		res.status(200) // if ok, return status code OK
 	} else {
 		res.status(418) // refuse to brew
