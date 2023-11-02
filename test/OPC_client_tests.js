@@ -22,4 +22,4 @@ describe("OPC_client", () => {
   });
 });
 
-// use npx mocha test/test.js to run the tests.
+// use npx mocha test/OPC_client_tests.js to run the tests.
