@@ -5,6 +5,7 @@ const app = express()
 const PORT = process.env.PORT || 80
 
 app.use(express.static(path.resolve(process.cwd(), '../frontend/dist')))
+app.use(express.json())
 
 app.get('/api', async (req, res) => {
 	res.setHeader('Cache-Control', 'no-cache')
@@ -32,6 +33,27 @@ app.get('/api', async (req, res) => {
 		clearInterval(interval)
 		res.end()
 	})
+})
+
+app.post('/pass-to-queue', (req, res) => {
+	const products = [
+		{ type: 'Pilser', id: 0 },
+		{ type: 'Wheat', id: 1 },
+		{ type: 'IPA', id: 2 },
+		{ type: 'Stout', id: 3 },
+		{ type: 'Ale', id: 4 },
+		{ type: 'Alcohol Free', id: 5 }
+	]
+	// receive request to process a beer type and an amount
+	beer_type = products.find(v => v.type == req.body.type).id	// search map where beer type equals product
+	beer_amount = req.body.amount
+
+	if (OPC_client.brew(beer_type, beer_amount)){	// send beer type request to queue
+		res.status(200) // if ok, return status code OK
+	} else {
+		res.status(418) // refuse to brew
+	}
+	
 })
 
 app.listen(PORT, function () {
