@@ -29,6 +29,7 @@ export default function App() {
 		const sse = new EventSource('/api', { withCredentials: true })
 		sse.onmessage = (e) => {
 			try {
+				console.log(e.data)
 				setData(JSON.parse(e.data))
 				// console.log(JSON.parse(e.data))
 			} catch (e) {

@@ -9,7 +9,7 @@ let client; // OPC client
 module.exports = {
 	connect: async ()=> { 
 		try {
-			const endpointUrl2 = 'opc.tcp://localhost:4840'
+			const endpointUrl2 = 'opc.tcp://127.0.0.1:4840'
 			client = OPCUAClient.create({
 				endpointMustExist: false,
 			})
@@ -24,6 +24,7 @@ module.exports = {
 			}
 		}		
 	},
+
 
 	read: async (VariableName)=> {
 
@@ -45,6 +46,7 @@ module.exports = {
 		if (variable) {
   			const value = await session.readVariableValue(variable.path)
   			console.log(`${variable.name}: ${value.value.value}`)
+			return value.value.value
 		} else {
   			console.error(`Variable ${VariableName} not found`)
 		}
