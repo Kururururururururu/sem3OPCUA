@@ -132,3 +132,9 @@ dist
 # IDE
 .idea
 .vscode
+rapport/main.toc
+rapport/main.synctex.gz
+rapport/main.pdf
+rapport/main.fls
+rapport/main.fdb_latexmk
+rapport/main.aux
