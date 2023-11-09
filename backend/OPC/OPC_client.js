@@ -87,7 +87,7 @@ module.exports = {
 		}
 	},
 
-	brew: async (beer_type, beer_amount, batch_id, machine_speed) => {
+	brew: async (beer_type, beer_amount, machine_speed) => {
 		try {
 			const speedLimits = {
 				'Pilser': 600,
@@ -110,7 +110,7 @@ module.exports = {
 					value: {
 						value: {
 							dataType: DataType.String,
-							value: batch_id,
+							value: beer_type,
 						},
 					},
 				},
@@ -140,7 +140,7 @@ module.exports = {
 				await session.write(node)
 			}
 
-			console.log(`Brewing ${beer_amount} of beer type ${beer_type} with batch id ${batch_id} at a speed of ${machine_speed} beers per minute`)
+			console.log(`Brewing ${beer_amount} of beer type ${beer_type} at a speed of ${machine_speed} beers per minute`)
 			return true
 		} catch (err) {
 			console.error('An error occurred while brewing:', err)

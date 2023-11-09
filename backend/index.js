@@ -35,7 +35,8 @@ app.get('/api', async (req, res) => {
 	})
 })
 
-app.post('/pass-to-queue', (req, res) => {
+app.post('/pass-to-queue', async (req, res) => {
+	/*
 	const products = [
 		{ type: 'Pilser', id: 0 },
 		{ type: 'Wheat', id: 1 },
@@ -45,10 +46,16 @@ app.post('/pass-to-queue', (req, res) => {
 		{ type: 'Alcohol Free', id: 5 }
 	]
 	// receive request to process a beer type and an amount
-	beer_type = products.find(v => v.type == req.body.type).id	// search map where beer type equals product
+	beer_type = products.find(v => v.type === req.body.type).id	// search map where beer type equals product
+	*/
+	beer_type = req.body.type
 	beer_amount = req.body.amount
+	console.log(`Received request to brew ${beer_amount} of ${req.body.type}`)
 
-	if (opcuaClient.brew(beer_type, beer_amount)){	// send beer type request to queue
+	await opcuaClient.connect()
+	
+
+	if (await opcuaClient.brew(beer_type, beer_amount, 50)){	// send beer type request to queue
 		res.status(200) // if ok, return status code OK
 	} else {
 		res.status(418) // refuse to brew

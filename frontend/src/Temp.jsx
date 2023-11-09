@@ -2,9 +2,30 @@ import { useEffect, useState } from 'react'
 import Button from './components/button'
 
 export default function Temp() {
-	const beers = ['Beer type 1', 'Beer type 2', 'Beer type 3', 'Beer type 4', 'Beer type 5']
+	const beers = ['Pilsner', 'Wheat', 'IPA', 'Stout', 'Ale', 'Alchohol Free']
 	const [progress, setProgress] = useState(0)
 	const [isActive, setIsActive] = useState(false)
+
+	function brewBeer(beer) {
+		fetch('/pass-to-queue', {
+			method: 'POST',
+			body: JSON.stringify({
+			  type: beer,
+			  amount: 1
+			}),
+			headers: {
+			  'Content-type': 'application/json; charset=UTF-8',
+			},
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data);
+			// Handle data
+		})
+		.catch((err) => {
+			console.log(err.message);
+		});
+	}
 
 	useEffect(() => {
 		if (isActive) {
@@ -26,12 +47,13 @@ export default function Temp() {
 		<div className={'container mx-auto mt-10 flex flex-col gap-4'}>
 			<div className={'flex gap-4'}>
 				{beers.map((beer, index) => (
-					<div
+					<button
 						key={index}
-						className={'flex flex-col justify-center items-center border border-gray-500 rounded-md p-20'}
+						className={'flex flex-col justify-center items-center border border-gray-500 rounded-md p-20 w-1/6'}
+						onClick={() => brewBeer(beer)}
 					>
 						<h1 className={'text-2xl font-bold text-gray-900'}>{beer}</h1>
-					</div>
+					</button>
 				))}
 			</div>
 
