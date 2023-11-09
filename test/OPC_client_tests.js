@@ -9,7 +9,7 @@ describe("OPC_client", () => {
   });
 
   it("should be able to read a variable from the OPC server", async () => {
-    await OPCUAClient.read("Yeast");
+    await OPCUAClient.read("StopReason");
   });
 
   it("should be able to write a variable to the OPC server", async () => {
@@ -53,4 +53,4 @@ describe("OPC_client", () => {
   });
 });
 
-// use npx mocha test/OPC_client_tests.js to run the tests.
+// use npx mocha test/OPC_client_tests.js to run the tests. Or run npx mocha which runs all the test in the test folder.
