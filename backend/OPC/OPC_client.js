@@ -87,6 +87,67 @@ module.exports = {
 		}
 	},
 
+	brew: async (beer_type, beer_amount, batch_id, machine_speed) => {
+		try {
+			const speedLimits = {
+				'Pilser': 600,
+				'Wheat': 300,
+				'IPA': 150,
+				'Stout': 200,
+				'Ale': 100,
+				'Alcohol Free': 125
+			}
+	
+			if (machine_speed < 0 || machine_speed > speedLimits[beer_type]) {
+				console.error(`Invalid machine speed for ${beer_type}. It should be between 0 and ${speedLimits[beer_type]}.`)
+				return false
+			}
+	
+			const nodesToWrite = [
+				{
+					nodeId: 'ns=6;s=::Program:Cube.Command.Parameter[0].Value',
+					attributeId: 13,
+					value: {
+						value: {
+							dataType: DataType.String,
+							value: batch_id,
+						},
+					},
+				},
+				{
+					nodeId: 'ns=6;s=::Program:Cube.Command.Parameter[2].Value',
+					attributeId: 13,
+					value: {
+						value: {
+							dataType: DataType.Int16,
+							value: beer_amount,
+						},
+					},
+				},
+				{
+					nodeId: 'ns=6;s=::Program:Cube.Status.MachSpeed',
+					attributeId: 13,
+					value: {
+						value: {
+							dataType: DataType.Float,
+							value: machine_speed,
+						},
+					},
+				}
+			]
+	
+			for (let node of nodesToWrite) {
+				await session.write(node)
+			}
+
+			console.log(`Brewing ${beer_amount} of beer type ${beer_type} with batch id ${batch_id} at a speed of ${machine_speed} beers per minute`)
+			return true
+		} catch (err) {
+			console.error('An error occurred while brewing:', err)
+			return false
+		}
+	},
+
 	disconnect: async () => {
 		try {
 			await session.close()

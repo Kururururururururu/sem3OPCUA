@@ -16,6 +16,40 @@ describe("OPC_client", () => {
     await OPCUAClient.write("Yeast", "1000", "Float");
   });
 
+  it('should brew the beer correctly', async () =>{
+    const beer_type = 'Pilser';
+    const beer_amount = 100;
+    const batch_id = 'batch1';
+    const machine_speed = 500;
+
+    const result = await OPCUAClient.brew(beer_type, beer_amount, batch_id, machine_speed);
+
+    expect(result).to.be.true;
+  });
+
+  
+  it('should fail when the machine speed is too high', async () =>{
+    const beer_type = 'Pilser';
+    const beer_amount = 100;
+    const batch_id = 'batch1';
+    const machine_speed = 700;
+
+    const result = await OPCUAClient.brew(beer_type, beer_amount, batch_id, machine_speed);
+
+    expect(result).to.be.false;
+  });
+
+  it('should fail when the machine speed is too low', async () =>{
+    const beer_type = 'Pilser';
+    const beer_amount = 100;
+    const batch_id = 'batch1';
+    const machine_speed = -1;
+
+    const result = await OPCUAClient.brew(beer_type, beer_amount, batch_id, machine_speed);
+
+    expect(result).to.be.false;
+  });
+
   it("should be able to disconnect from the OPC server", async () => {
     await OPCUAClient.disconnect();
 
