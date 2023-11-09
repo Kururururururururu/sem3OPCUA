@@ -22,7 +22,7 @@ module.exports = {
 	},
 
 	/**
-	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"} VariableName
+	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"StopReason"} VariableName
 	 * @returns {Promise<Number> | undefined}
 	 */
 	read: async (VariableName) => {
@@ -38,6 +38,7 @@ module.exports = {
 			{ name: 'FillingInventory', path: 'ns=6;s=::Program:FillingInventory' },
 			{ name: 'Counter', path: 'ns=6;s=::Program:Maintenance.Counter' },
 			{ name: 'State', path: 'ns=6;s=::Program:Maintenance.State' },
+			{ name: 'StopReason', path: 'ns=6;s=::Program:Cube.Admin.StopReason.ID'}
 		]
 
 		const variable = variables.find((v) => v.name === VariableName)
