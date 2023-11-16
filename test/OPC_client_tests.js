@@ -9,11 +9,11 @@ describe("OPC_client", () => {
   });
 
   it("should be able to read a variable from the OPC server", async () => {
-    await OPCUAClient.read("StopReason");
+    await OPCUAClient.read("ExecuteState");
   });
 
   it("should be able to write a variable to the OPC server", async () => {
-    await OPCUAClient.write("Yeast", "1000", "Float");
+    await OPCUAClient.write("StopReason", 11, "Int32");
   });
 
   it('should brew the beer correctly', async () =>{
@@ -45,6 +45,10 @@ describe("OPC_client", () => {
     const result = await OPCUAClient.brew(beer_type, beer_amount, machine_speed);
 
     expect(result).to.be.false;
+  });
+
+  it("Should be able to peform maintenence", async () => {
+    await OPCUAClient.maintenence();
   });
 
   it("should be able to disconnect from the OPC server", async () => {
