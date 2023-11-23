@@ -73,7 +73,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+# .env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -139,11 +139,4 @@ rapport/main.fls
 rapport/main.fdb_latexmk
 rapport/main.aux
 rapport/main.synctex(busy)
-rapport/main.out
-rapport/main.out
-rapport/main.blg
-rapport/main.bcf
-rapport/main.bbl
-rapport/main.out
-rapport/main.run.xml
 rapport/main.out
