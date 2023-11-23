@@ -27,7 +27,7 @@ export default function BeerButtons() {
     return (
         <div className={'flex gap-4'}>
             {beers.map((beer, index) => (
-                <BeerButton key={index} beer={beer} brewBeer={brewBeer} />
+                <BeerButton key={index} beer={beer} brewBeer={() => brewBeer(beer)}/>
             ))}
         </div>
     )
