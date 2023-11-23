@@ -3,6 +3,10 @@
 \usepackage{caption} 
 \usepackage[hidelinks]{hyperref}
 \usepackage{longtable}
+\usepackage{biblatex}
+\addbibresource{kilder.bib}
+\setlength{\parindent}{0pt}
+
 
 \begin{document}
 
@@ -14,14 +18,16 @@
 \input{sections/introduction.tex}
 \newpage
 \input{sections/requirements.tex}
-\input{sections/analasys.tex}
+\input{sections/analysis.tex} 
 \input{sections/design.tex}
 \input{sections/implementation.tex}
 \input{sections/test.tex}
 \input{sections/discussion.tex}
 \input{sections/conclusion.tex}
 
-% Make reference list with bibtex
-\input{sections/references.tex}
+\newpage
+
+\printbibliography
+
 
 \end{document}
