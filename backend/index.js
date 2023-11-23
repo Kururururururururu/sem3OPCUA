@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const opcuaClient = require('./OPC/OPC_client')
+const database = require('./db.js')
 const app = express()
 const PORT = process.env.PORT || 80
 
