@@ -51,7 +51,6 @@ app.post('/pass-to-queue', async (req, res) => {
     */
 
 	try {
-		console.log(req.body)
 		// check if the request has the required fields
 		const { amount, type } = req.body
 		if (!amount || !type) throw new Error('Request is missing required fields')
