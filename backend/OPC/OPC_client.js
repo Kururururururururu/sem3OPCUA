@@ -1,5 +1,4 @@
-const { OPCUAClient } = require('node-opcua-client')
-const { DataType } = require('node-opcua-client')
+const { OPCUAClient, DataType, AttributeIds, WriteValueOptions } = require('node-opcua-client')
 
 let session // OPC session
 let client // OPC client
@@ -46,10 +45,7 @@ module.exports = {
 			{ name: 'Counter', path: 'ns=6;s=::Program:Maintenance.Counter' },
 			{ name: 'State', path: 'ns=6;s=::Program:Maintenance.State' },
 			{ name: 'StopReason', path: 'ns=6;s=::Program:Cube.Admin.StopReason.ID' },
-			{
-				name: 'ExecuteState',
-				path: 'ns=6;s=::Program:Cube.Command.CmdChangeRequest',
-			},
+			{ name: 'ExecuteState', path: 'ns=6;s=::Program:Cube.Command.CmdChangeRequest' },
 			{ name: 'ExecuteOrder', path: 'ns=6;s=::Program:Cube.Command.CntrlCmd' },
 		]
 
@@ -65,8 +61,15 @@ module.exports = {
 
 	/**
 	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"ExecuteState"|"ExecuteOrder"|"StopReason"} VariableName
+	 * @param value
+	 * @param {number} dataType
 	 */
 	write: async (VariableName, value, dataType) => {
+		if (Object.values(DataType).indexOf(dataType) === -1) {
+			console.error('Invalid data type')
+			return
+		}
+
 		const variables = [
 			{ name: 'Temperature', path: 'ns=6;s=::Program:Data.Value.Temperature' },
 			{
@@ -82,21 +85,19 @@ module.exports = {
 			{ name: 'FillingInventory', path: 'ns=6;s=::Program:FillingInventory' },
 			{ name: 'Counter', path: 'ns=6;s=::Program:Maintenance.Counter' },
 			{ name: 'State', path: 'ns=6;s=::Program:Maintenance.State' },
-			{
-				name: 'ExecuteState',
-				path: 'ns=6;s=::Program:Cube.Command.CmdChangeRequest',
-			},
+			{ name: 'ExecuteState', path: 'ns=6;s=::Program:Cube.Command.CmdChangeRequest' },
 			{ name: 'ExecuteOrder', path: 'ns=6;s=::Program:Cube.Command.CntrlCmd' },
 			{ name: 'StopReason', path: 'ns=6;s=::Program:Cube.Admin.StopReason.ID' },
 		]
+
 		const variable = variables.find((v) => v.name === VariableName)
 		try {
 			const nodeToWrite = {
 				nodeId: variable.path,
-				attributeId: 13,
+				attributeId: AttributeIds.Value,
 				value: {
 					value: {
-						dataType: OPCUAClient.dataType,
+						dataType: dataType,
 						value: value,
 					},
 				},
@@ -113,8 +114,8 @@ module.exports = {
 		const StopReason = await module.exports.read('StopReason')
 		let Products = []
 		if (StopReason === 11) {
-			await module.exports.write('ExecuteOrder', 1, 'Int16')
-			await module.exports.write('ExecuteState', true, 'Boolean')
+			await module.exports.write('ExecuteOrder', 1, DataType.Int16)
+			await module.exports.write('ExecuteState', true, DataType.Boolean)
 			await module.exports.write('ExecuteOrder', 2, 'Int16')
 			await module.exports.write('ExecuteState', true, 'Boolean')
 			await module.exports.write('ExecuteOrder', 3, 'Int16')
@@ -150,15 +151,20 @@ module.exports = {
 
 	/**
 	 *
-	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"ExecuteState"|"ExecuteOrder"|"StopReason"} beer_type
+	 * @param {0|1|2|3|4|5} beer_type
 	 * @param {number} beer_amount
 	 * @param {number} machine_speed
 	 * @returns {Promise<boolean>}
 	 */
 	brew: async (beer_type, beer_amount, machine_speed) => {
 		try {
+			if (beer_type === undefined || !beer_amount || !machine_speed) {
+				console.error('Missing required fields')
+				return false
+			}
+
 			const speedLimits = {
-				Pilser: 600,
+				Pilsner: 600,
 				Wheat: 300,
 				IPA: 150,
 				Stout: 200,
@@ -173,28 +179,28 @@ module.exports = {
 
 			const nodesToWrite = [
 				{
-					nodeId: 'ns=6;s=::Program:Cube.Command.Parameter[0].Value',
-					attributeId: 13,
+					nodeId: 'ns=6;s=::Program:Cube.Command.Parameter[1].Value',
+					attributeId: AttributeIds.Value,
 					value: {
 						value: {
-							dataType: DataType.String,
+							dataType: DataType.Float,
 							value: beer_type,
 						},
 					},
 				},
 				{
 					nodeId: 'ns=6;s=::Program:Cube.Command.Parameter[2].Value',
-					attributeId: 13,
+					attributeId: AttributeIds.Value,
 					value: {
 						value: {
-							dataType: DataType.Int16,
+							dataType: DataType.Float,
 							value: beer_amount,
 						},
 					},
 				},
 				{
-					nodeId: 'ns=6;s=::Program:Cube.Status.MachSpeed',
-					attributeId: 13,
+					nodeId: 'ns=6;s=::Program:Cube.Command.MachSpeed',
+					attributeId: AttributeIds.Value,
 					value: {
 						value: {
 							dataType: DataType.Float,
@@ -204,8 +210,19 @@ module.exports = {
 				},
 			]
 
+			const needsMaintenance =
+				(await module.exports.read('StopReason')) === 10 || (await module.exports.read('StopReason')) === 11
+
+			if (needsMaintenance) await module.exports.maintenence()
+
 			for (let node of nodesToWrite) {
-				await session.write(node)
+				const StopReason = await module.exports.read('StopReason')
+				if (StopReason === 10 || StopReason === 11) {
+					await module.exports.maintenence()
+				}
+				const statusCode = await session.write(node)
+				if (statusCode._value !== 0) throw new Error(`Write failed with status code ${statusCode.toString()}`)
+				console.log(`Written to node ${node.nodeId} with status code ${statusCode.toString()}`)
 			}
 
 			console.log(`Brewing ${beer_amount} of beer type ${beer_type} at a speed of ${machine_speed} beers per minute`)

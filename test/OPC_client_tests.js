@@ -17,7 +17,7 @@ describe("OPC_client", () => {
   });
 
   it('should brew the beer correctly', async () =>{
-    const beer_type = 'Pilser';
+    const beer_type = 'Pilsner';
     const beer_amount = 100;
     const machine_speed = 500;
 
@@ -28,7 +28,7 @@ describe("OPC_client", () => {
 
   
   it('should fail when the machine speed is too high', async () =>{
-    const beer_type = 'Pilser';
+    const beer_type = 'Pilsner';
     const beer_amount = 100;
     const machine_speed = 700;
 
@@ -38,7 +38,7 @@ describe("OPC_client", () => {
   });
 
   it('should fail when the machine speed is too low', async () =>{
-    const beer_type = 'Pilser';
+    const beer_type = 'Pilsner';
     const beer_amount = 100;
     const machine_speed = -1;
 

@@ -4,10 +4,10 @@ import { beers } from '../../../constants/beers.js'
 export default function BeerContainers() {
 	return (
 		<div className='flex'>
-			{beers.map((type, index) => (
+			{beers.map((beer, index) => (
 				<div key={index} className='flex flex-col'>
 					<BeerContainer />
-					<p className='text-2xl font-bold text-gray-900'>{type}</p>
+					<p className='text-2xl font-bold text-gray-900'>{beer.type}</p>
 				</div>
 			))}
 		</div>

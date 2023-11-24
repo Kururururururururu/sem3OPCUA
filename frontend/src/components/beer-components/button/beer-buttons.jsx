@@ -3,7 +3,7 @@ import { beers } from '../../../constants/beers.js'
 
 export default function BeerButtons() {
 	function brewBeer(beer) {
-		fetch('/pass-to-queue', {
+		fetch('/api/pass-to-queue', {
 			method: 'POST',
 			body: JSON.stringify({
 				type: beer,
@@ -26,7 +26,7 @@ export default function BeerButtons() {
 	return (
 		<div className={'flex gap-4'}>
 			{beers.map((beer, index) => (
-                <BeerButton key={index} beer={beer} brewBeer={() => brewBeer(beer)}/>
+                <BeerButton key={index} beer={beer.type} brewBeer={() => brewBeer(beer.type)}/>
             ))}
 		</div>
 	)
