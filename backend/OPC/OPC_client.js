@@ -1,7 +1,11 @@
-const { OPCUAClient, DataType, AttributeIds, WriteValueOptions } = require('node-opcua-client')
-
+const { OPCUAClient, DataType, AttributeIds, WriteValueOptions, ClientSubscription } = require('node-opcua-client')
+const { MonitoringMode } = require('node-opcua-types')
+const { TimestampsToReturn } = require('node-opcua-data-value')
 let session // OPC session
 let client // OPC client
+let subscription // OPC subscription
+let batchId = 0
+let batchIdFromOPC = 0
 
 const PackMLCmdOptions = {
 	Reset: 1,
@@ -52,6 +56,8 @@ const variables = [
 	{ name: 'BeerType', path: 'ns=6;s=::Program:Cube.Command.Parameter[1].Value' },
 	{ name: 'BeerAmount', path: 'ns=6;s=::Program:Cube.Command.Parameter[2].Value' },
 	{ name: 'MachineSpeed', path: 'ns=6;s=::Program:Cube.Command.MachSpeed' },
+	{ name: 'SetBatchId', path: 'ns=6;s=::Program:Cube.Command.Parameter[0].Value' },
+	{ name: 'BatchId', path: 'ns=6;s=::Program:Cube.Status.Parameter[0].Value' },
 ]
 
 const products = {
@@ -72,17 +78,36 @@ const speedLimits = {
 	[products['Alcohol Free']]: 125,
 }
 
+function findVariable(name) {
+	return variables.find((v) => v.name === name)
+}
+
 const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://127.0.0.1:4840'
 
 module.exports = {
+	getBatchId: () => batchIdFromOPC,
 	connect: async () => {
 		try {
+			if (session) {
+				console.log('Session already created!')
+				return
+			}
 			client = OPCUAClient.create({
 				endpointMustExist: false,
 			})
 			console.log('Connecting to OPC UA server... !!!', opcEndpointUrl)
 			await client.connect(opcEndpointUrl).then(() => console.log('Session created!'))
 			session = await client.createSession()
+			// make subcribe if there is none
+			if (!subscription) {
+				module.exports.subscribe('BatchId', (value) => {
+					const currentValue = value.value
+					console.log('BatchId changed to ', currentValue)
+					if (currentValue > 0) {
+						batchIdFromOPC = currentValue
+					}
+				})
+			}
 		} catch (err) {
 			if (err instanceof Error) {
 				console.log(err.message)
@@ -92,11 +117,11 @@ module.exports = {
 	},
 
 	/**
-	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"StopReason"|"ExecuteState"|"ExecuteOrder"|"BeerType"|"BeerAmount"|"MachineSpeed"} VariableName
+	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"StopReason"|"ExecuteState"|"ExecuteOrder"|"BeerType"|"BeerAmount"|"MachineSpeed"|"BatchId"|"SetBatchId"} VariableName - "Temperature
 	 * @returns {Promise<Number> | undefined}
 	 */
 	read: async (VariableName) => {
-		const variable = variables.find((v) => v.name === VariableName)
+		const variable = findVariable(VariableName)
 		if (variable) {
 			const value = await session.readVariableValue(variable.path)
 			console.log(`Read from node ${VariableName} with value ${value.value.value}`)
@@ -107,7 +132,7 @@ module.exports = {
 	},
 
 	/**
-	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"StopReason"|"ExecuteState"|"ExecuteOrder"|"BeerType"|"BeerAmount"|"MachineSpeed"} VariableName
+	 * @param {"Temperature"|"StateCurrent"|"Vibration"|"Barley"|"Hops"|"Malt"|"Wheat"|"Yeast"|"FillingInventory"|"Counter"|"State"|"StopReason"|"ExecuteState"|"ExecuteOrder"|"BeerType"|"BeerAmount"|"MachineSpeed"|"BatchId"|"SetBatchId"} VariableName - "Temperature
 	 * @param value
 	 * @param {number} dataType
 	 */
@@ -116,7 +141,7 @@ module.exports = {
 			throw new Error('Invalid data type')
 		}
 
-		const variable = variables.find((v) => v.name === VariableName)
+		const variable = findVariable(VariableName)
 
 		if (!variable) {
 			throw new Error(`Variable ${VariableName} not found`)
@@ -222,6 +247,12 @@ module.exports = {
 				},
 			]
 
+			let state = await module.exports.read('StateCurrent')
+			if (state !== PackMLStateOptions.Execute) {
+				console.log('PackMLStateHandler Brew')
+				await PackMLStateHandler()
+			}
+
 			const currentStopReason = await module.exports.read('StopReason')
 			const needsMaintenance = currentStopReason === 10 || currentStopReason === 11
 
@@ -235,9 +266,14 @@ module.exports = {
 				await module.exports.write(node.variable, node.value, node.dataType)
 			}
 
+			batchId++
+			console.log('Value changed for batchId to ', batchId)
+			await module.exports.write('SetBatchId', batchId, DataType.Float)
+
 			console.log(`Brewing ${beer_amount} of beer type ${beer_type} at a speed of ${machine_speed} beers per minute`)
-			const state = await module.exports.read('StateCurrent')
+			state = await module.exports.read('StateCurrent')
 			if (state !== PackMLStateOptions.Execute) {
+				console.log('PackMLStateHandler Brew')
 				await PackMLStateHandler()
 			}
 			return true
@@ -260,6 +296,51 @@ module.exports = {
 			}
 			process.exit(0)
 		}
+	},
+	subscribe: (VariableName, callback) => {
+		const variable = findVariable(VariableName)
+		if (!variable) {
+			throw new Error(`Variable ${VariableName} not found`)
+		}
+
+		if (!session) {
+			throw new Error('Session not created')
+		}
+
+		console.log('Subscribing to node', variable.path)
+
+		subscription = ClientSubscription.create(session, {
+			requestedPublishingInterval: 1000,
+			requestedMaxKeepAliveCount: 20,
+			requestedLifetimeCount: 6000,
+			maxNotificationsPerPublish: 1000,
+			publishingEnabled: true,
+			priority: 10,
+		})
+
+		subscription.monitor(
+			{
+				nodeId: variable.path,
+				attributeId: AttributeIds.Value,
+			},
+			{
+				samplingInterval: 100,
+				discardOldest: true,
+				queueSize: 10,
+			},
+			TimestampsToReturn.Both,
+			MonitoringMode.Reporting
+		)
+
+		subscription.on('received_notifications', (notifications) => {
+			console.log(
+				'Received notifications',
+				variable.name,
+				variable.path,
+				notifications.notificationData[0].monitoredItems[0].value.value
+			)
+			callback(notifications.notificationData[0].monitoredItems[0].value.value)
+		})
 	},
 }
 

@@ -9,6 +9,29 @@ const DIST_DIR = process.env.DIST_DIR || '../frontend/dist'
 app.use(express.static(path.resolve(process.cwd(), DIST_DIR)))
 app.use(express.json())
 
+// make SSE connection to client for the batch id
+app.get('/api/batch', async (req, res) => {
+	res.setHeader('Cache-Control', 'no-cache')
+	res.setHeader('Content-Type', 'text/event-stream')
+	res.setHeader('Access-Control-Allow-Origin', '*')
+	res.setHeader('Connection', 'keep-alive')
+	res.flushHeaders() // flush the headers to establish SSE with client
+
+	const opcua = opcuaClient
+	await opcua.connect()
+
+	const interval = setInterval(async () => {
+		const batch = opcua.getBatchId()
+		const chunk = JSON.stringify({ batch })
+		res.write(`data: ${chunk}\n\n`)
+	}, 1000)
+
+	res.on('close', () => {
+		clearInterval(interval)
+		res.end()
+	})
+})
+
 app.get('/api', async (req, res) => {
 	res.setHeader('Cache-Control', 'no-cache')
 	res.setHeader('Content-Type', 'text/event-stream')
@@ -29,7 +52,7 @@ app.get('/api', async (req, res) => {
 		const values = { wheat, barley, hops, yeast, malt, stateCurrent }
 		const chunk = JSON.stringify({ values })
 		res.write(`data: ${chunk}\n\n`)
-	}, 1000)
+	}, 100)
 
 	res.on('close', () => {
 		clearInterval(interval)
@@ -49,7 +72,7 @@ const beers = [
 app.post('/api/pass-to-queue', async (req, res) => {
 	try {
 		// check if the request has the required fields
-		const { amount, type } = req.body
+		const { amount, type, speed } = req.body
 		if (!amount || !type) throw new Error('Request is missing required fields')
 
 		console.log(`Received request to brew ${amount} of ${type}`)
@@ -68,7 +91,7 @@ app.post('/api/pass-to-queue', async (req, res) => {
 
 		await opcuaClient.connect()
 
-		if (await opcuaClient.brew(beer_type, beer_amount, 600)) {
+		if (await opcuaClient.brew(beer_type, beer_amount, speed ?? 10)) {
 			// send beer type request to queue
 			res.status(200) // if ok, return status code OK
 			res.send({ status: 'ok' })
