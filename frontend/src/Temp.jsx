@@ -8,12 +8,12 @@ export default function Temp() {
 
 	return (
 		<div className={'container mx-auto mt-10 flex flex-col gap-4'}>
-			<BeerButtons />
+			<BeerButtons setIsActive={setIsActive}/>
 
 			<div className='w-full h-1 bg-gray-500 my-4' />
 
 			<div className='w-full flex items-center justify-center'>
-				<BatchIdProgressBar
+				<ProgressBar
 					isActive={isActive}
 					setIsActive={setIsActive}
 				/>
@@ -27,49 +27,25 @@ export default function Temp() {
 	)
 }
 
-function BatchIdProgressBar({ isActive, setIsActive }) {
+function ProgressBar({ isActive, setIsActive }) {
 	const [progress, setProgress] = useState(0)
-	const [batchId, setBatchId] = useState(0)
 
 	useEffect(() => {
-		// make an sse request to the server to get the current batch id
-		// set the progress to the current batch id
-		// set the is active to true
-		// when the progress is 100, set the is active to false
-		// when the is active is false, clear the interval
-		const getBatchId = async () => {
-			const source = new EventSource('/api/batch')
+		if (isActive) {
+			const state = new EventSource('/api/state')
+			let currentState
 
-			source.onmessage = function (event) {
-				console.log('event', event)
-				if (event.data === 'done') {
-					setIsActive(false)
-					return
-				}
-
-				const parsedData = JSON.parse(event.data)
-				const batchIdFromServer = parsedData.batch
-
-				console.log('batchId', batchIdFromServer)
-
-				// parse the event data and be sure that it matches a number
-				if (isNaN(batchIdFromServer)) {
-					return
-				}
-				if (batchIdFromServer === batchId) {
-					return
-				} else {
-					setBatchId(batchIdFromServer)
-					if (batchIdFromServer === 0) {
-						setIsActive(false)
-					} else {
-						setIsActive(true)
-					}
-				}
+			state.onmessage = function (event) {
+				console.log('event', event.data)
+				currentState = JSON.parse(event.data)
 			}
+
+			if(currentState != 6) {
+				setIsActive(false)
+			}
+			
 		}
-		getBatchId()
-	}, [batchId, setIsActive, isActive])
+	}, [isActive, setIsActive])
 
 	useEffect(() => {
 		if (isActive) {
@@ -94,7 +70,6 @@ function BatchIdProgressBar({ isActive, setIsActive }) {
 				value={progress}
 				max='100'
 			/>
-			{batchId}
 		</div>
 	)
 }

@@ -1,7 +1,7 @@
 import BeerButton from './beer-button.jsx'
 import { beers } from '../../../constants/beers.js'
 
-export default function BeerButtons() {
+export default function BeerButtons({setIsActive}) {
 	function brewBeer(beer) {
 		fetch('/api/pass-to-queue', {
 			method: 'POST',
@@ -13,14 +13,7 @@ export default function BeerButtons() {
 				'Content-type': 'application/json; charset=UTF-8',
 			},
 		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data)
-				// Handle data
-			})
-			.catch((err) => {
-				console.log(err.message)
-			})
+		setIsActive(true)
 	}
 
 	return (

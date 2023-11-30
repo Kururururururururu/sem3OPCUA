@@ -55,10 +55,34 @@ app.get('/api/inventory', async (req, res) => {
 	}, 1000)
 
 	res.on('close', () => {
+		opcua.disconnect()
 		clearInterval(interval)
 		res.end()
 	})
 })
+
+app.get('/api/state', async (req, res) => {
+	res.setHeader('Cache-Control', 'no-cache')
+	res.setHeader('Content-Type', 'text/event-stream')
+	res.setHeader('Access-Control-Allow-Origin', '*')
+	res.setHeader('Connection', 'keep-alive')
+	res.flushHeaders() // flush the headers to establish SSE with client
+
+	const opcua = opcuaClient
+	await opcua.connect()
+
+	const interval = setInterval(async () => {
+		const state = await opcua.read('State')
+		const chunk = JSON.stringify({ state })
+		res.write(`data: ${chunk}\n\n`)
+	}, 1000)
+
+	res.on('close', () => {
+		opcua.disconnect()
+		clearInterval(interval)
+		res.end()
+	})
+});
 
 const beers = [
 	{ type: 'Pilsner', id: 0 },
