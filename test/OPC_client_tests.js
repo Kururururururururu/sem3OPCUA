@@ -9,7 +9,7 @@ describe("OPC_client", () => {
   });
 
   it("should be able to read a variable from the OPC server", async () => {
-    await OPCUAClient.read("ExecuteState");
+    await OPCUAClient.read("Wheat");
   });
 
   it("should be able to write a variable to the OPC server", async () => {
