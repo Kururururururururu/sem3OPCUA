@@ -3,7 +3,7 @@ const express = require('express')
 const opcuaClient = require('./OPC/OPC_client')
 const database = require('./db.js')
 const app = express()
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 3000
 const DIST_DIR = process.env.DIST_DIR || '../frontend/dist'
 
 app.use(express.static(path.resolve(process.cwd(), DIST_DIR)))
@@ -32,7 +32,7 @@ app.get('/api/batch', async (req, res) => {
 	})
 })
 
-app.get('/api', async (req, res) => {
+app.get('/api/inventory', async (req, res) => {
 	res.setHeader('Cache-Control', 'no-cache')
 	res.setHeader('Content-Type', 'text/event-stream')
 	res.setHeader('Access-Control-Allow-Origin', '*')
@@ -43,16 +43,16 @@ app.get('/api', async (req, res) => {
 	await opcua.connect()
 
 	const interval = setInterval(async () => {
-		const wheat = await opcua.read('Wheat')
-		const barley = await opcua.read('Barley')
-		const hops = await opcua.read('Hops')
-		const stateCurrent = await opcua.read('StateCurrent')
-		const yeast = await opcua.read('Yeast')
-		const malt = await opcua.read('Malt')
-		const values = { wheat, barley, hops, yeast, malt, stateCurrent }
-		const chunk = JSON.stringify({ values })
+		const [wheat, barley, hops, yeast, malt] = await Promise.all([
+			opcua.read('Wheat'),
+			opcua.read('Barley'),
+			opcua.read('Hops'),
+			opcua.read('Yeast'),
+			opcua.read('Malt'),
+		])
+		const chunk = JSON.stringify({ wheat, barley, hops, yeast, malt })
 		res.write(`data: ${chunk}\n\n`)
-	}, 100)
+	}, 1000)
 
 	res.on('close', () => {
 		clearInterval(interval)
