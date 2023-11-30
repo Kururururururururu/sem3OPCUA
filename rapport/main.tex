@@ -1,14 +1,15 @@
-\documentclass{article}
+\documentclass[12]{article}
 
 \usepackage{caption} 
 \usepackage[hidelinks]{hyperref}
 \usepackage{longtable}
+\usepackage{times}
 \usepackage{biblatex}
 \addbibresource{kilder.bib}
 \setlength{\parindent}{0pt}
 
 
-\begin{document}
+\begin{document}{1.5}
 
 \input{sections/frontpage.tex}
 
@@ -17,8 +18,8 @@
 
 \input{sections/introduction.tex}
 \newpage
-\input{sections/requirements.tex}
 \input{sections/analysis.tex} 
+\input{sections/requirements.tex}
 \input{sections/design.tex}
 \input{sections/implementation.tex}
 \input{sections/test.tex}
@@ -28,6 +29,5 @@
 \newpage
 
 \printbibliography
-
 
 \end{document}
