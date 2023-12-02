@@ -1,20 +1,30 @@
 \documentclass{article}
 
-\usepackage{caption} 
-\usepackage[hidelinks]{hyperref}
-\usepackage{longtable}
-\usepackage{biblatex}
+\input{package.tex}
+\input{commands.tex}
 \addbibresource{kilder.bib}
+
 \setlength{\parindent}{0pt}
+\geometry{margin=1in}
 
 
 \begin{document}
 
 \input{sections/frontpage.tex}
+\newpage
 
 \renewcommand{\contentsname}{Table of Contents}
+\doublespacing
 \tableofcontents
 
+
+
+
+\thispagestyle{empty}
+\clearpage
+\pagenumbering{arabic}
+
+\newpage
 \input{sections/introduction.tex}
 \newpage
 \input{sections/requirements.tex}
@@ -27,7 +37,12 @@
 
 \newpage
 
-\printbibliography
+\listoffigures
+\addcontentsline{toc}{section}{\listfigurename}
+\listoftables
+\addcontentsline{toc}{section}{\listtablename}
 
+
+\printbibliography
 
 \end{document}
