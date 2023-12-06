@@ -82,7 +82,7 @@ app.get('/api/state', async (req, res) => {
 		clearInterval(interval)
 		res.end()
 	})
-});
+})
 
 const beers = [
 	{ type: 'Pilsner', id: 0 },
@@ -132,3 +132,5 @@ app.post('/api/pass-to-queue', async (req, res) => {
 app.listen(PORT, function () {
 	console.log(`Server listening on port ${PORT}`)
 })
+
+module.exports = app

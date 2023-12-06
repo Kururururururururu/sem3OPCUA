@@ -1,1 +1,24 @@
 \section{Tests}
+
+In our project we have developed tests after the fact.
+This means that we started coding, making the features that we agreed on
+and seeing if it works after they were developed.
+In order to be certain that the quality is the same as before
+and to ensure that we don't accidentally break something which wouldn't be on purpose.
+If it works, then we would make tests to ensure that stability and robustness.
+This is not the best way to do it, but it was the way we did it.
+It also means that going forward and if it was a bigger project
+we would ideally have to make tests before we started coding.
+We have used the JavaScript test framework \textit{Mocha} for our tests.
+
+\subsection{Unit tests}
+
+Unit tests are tests that are made to test the smallest parts of the code.
+In practice this will lead to making tests of small isolated functions and methods.
+This is done to ensure that the code is working as intended and that it is robust.
+With the \textit{Mocha} test framework, we have made unit tests for the backend and the OPC-UA client.
+However, we have not made unit tests for the frontend.
+This is because it is a user interface and it is not as easy to test, and as the frontend is not the main focus of the project, we decided to not make unit tests for it.
+It also means that the frontend is not as robust as the backend and OPC-UA client, and is more likely to break if something is changed.
+The unit tests for the backend are made to test the endpoints and the functions that are used in the endpoints.
+The unit tests for the OPC-UA client are made to test the connection to the OPC-UA server and the functions that are used to both send and get data from the server.
