@@ -82,7 +82,7 @@ function findVariable(name) {
 	return variables.find((v) => v.name === name)
 }
 
-const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://127.0.0.1:4840'
+const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://192.168.0.122:4840'
 
 module.exports = {
 	getBatchId: () => batchIdFromOPC,
@@ -124,7 +124,7 @@ module.exports = {
 		const variable = findVariable(VariableName)
 		if (variable) {
 			const value = await session.readVariableValue(variable.path)
-			console.log(`Read from node ${VariableName} with value ${value.value.value}`)
+			//console.log(`Read from node ${VariableName} with value ${value.value.value}`)
 			return value.value.value
 		} else {
 			console.error(`Variable ${VariableName} not found`)
