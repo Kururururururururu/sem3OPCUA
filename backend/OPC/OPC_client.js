@@ -16,7 +16,7 @@ const PackMLCmdOptions = {
 	Clear: 5,
 }
 
-export const PackMLStateOptions = {
+ const PackMLStateOptions = {
 	Deactivated: 0,
 	Clearing: 1,
 	Stopped: 2,
@@ -35,6 +35,7 @@ export const PackMLStateOptions = {
 	Deactivating: 18,
 	Activating: 19,
 }
+module.exports.PackMLStateOptions = PackMLStateOptions;
 
 const variables = [
 	{ name: 'Temperature', path: 'ns=6;s=::Program:Data.Value.Temperature' },
