@@ -16,7 +16,7 @@ const PackMLCmdOptions = {
 	Clear: 5,
 }
 
-const PackMLStateOptions = {
+export const PackMLStateOptions = {
 	Deactivated: 0,
 	Clearing: 1,
 	Stopped: 2,
@@ -263,9 +263,6 @@ module.exports = {
 				const StopReason = await module.exports.read('StopReason')
 				if (StopReason === 10 || StopReason === 11) {
 					await module.exports.maintenence()
-				}
-				while (currentState !== PackMLStateOptions.Idle) {
-					await new Promise((resolve) => setTimeout(resolve, 1000))
 				}
 				await module.exports.write(node.variable, node.value, node.dataType)
 			}
