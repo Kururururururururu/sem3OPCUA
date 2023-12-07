@@ -46,9 +46,11 @@ Now that we have declared how the system is being deployed, its important to und
     \end{figure}
 \end{center}
 
-Figure \ref{fig:SQdiagram_implementation} shows the sequence diagram of the system. The diagram shows the behaviour and workflow between the different compononents and how the react to input. When a user selects a beer from the user-friendly interface the frontend(App.js) it will send a request to the backend, where the backend will verify the selected beer, then the request is sent back to the fronted where the user can input the amount of beer he wants breewed. When the amount and type is selected, the brewing request is sent to the OPC or beer machine. 
+Figure \ref{fig:SQdiagram_implementation} shows the sequence diagram of the system. The diagram shows the behaviour and workflow between the different compononents and how the react to input. When a user selects a beer from the user-friendly interface the frontend(App.jsx) it will send a request to the backend, where the backend will verify the selected beer, then the request is sent back to the fronted where the user can input the amount of beer he wants breewed. When the amount and type is selected, the brewing request is sent to the OPC or beer machine. 
 When the brewing is done, the data for the given batch production will be sent to the database, with data about the succes of the brewing, failures and etc. This data can be handled if needed to help optimize the brewing process. The client does not get this message it work internally in our automated system. The service will sent a message to the backend saying the beer is done, here the backend sent a request to the frontend where it user get displayed the beer type and amount brewed is a success.
 Overall this is a simple representation of the sytems workflow, but it helps indicate the progress from selecting a beer to actually getting the product.
+
+\subsubsubsection{Sequence diagram}
 
 \begin{center}
     \centering

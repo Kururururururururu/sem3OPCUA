@@ -6,6 +6,7 @@ let client // OPC client
 let subscription // OPC subscription
 let batchId = 0
 let batchIdFromOPC = 0
+let currentState
 
 const PackMLCmdOptions = {
 	Reset: 1,
@@ -82,7 +83,7 @@ function findVariable(name) {
 	return variables.find((v) => v.name === name)
 }
 
-const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://192.168.0.122:4840'
+const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://127.0.0.1:4840'
 
 module.exports = {
 	getBatchId: () => batchIdFromOPC,
@@ -100,11 +101,11 @@ module.exports = {
 			session = await client.createSession()
 			// make subcribe if there is none
 			if (!subscription) {
-				module.exports.subscribe('BatchId', (value) => {
+				module.exports.subscribe('StateCurrent', (value) => {
 					const currentValue = value.value
-					console.log('BatchId changed to ', currentValue)
-					if (currentValue > 0) {
-						batchIdFromOPC = currentValue
+					if (currentValue !== currentState) {
+						console.log('State changed to', currentValue)
+						currentState = currentValue
 					}
 				})
 			}
@@ -261,6 +262,9 @@ module.exports = {
 				const StopReason = await module.exports.read('StopReason')
 				if (StopReason === 10 || StopReason === 11) {
 					await module.exports.maintenence()
+				}
+				while (currentState !== PackMLStateOptions.Idle) {
+					await new Promise((resolve) => setTimeout(resolve, 1000))
 				}
 				await module.exports.write(node.variable, node.value, node.dataType)
 			}
