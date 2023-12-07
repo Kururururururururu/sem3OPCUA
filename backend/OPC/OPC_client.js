@@ -70,12 +70,12 @@ const products = {
 }
 
 const speedLimits = {
-	[products.Pilsner]: 600,
-	[products.Wheat]: 300,
-	[products.IPA]: 150,
+	[products.Pilsner]: 263,
+	[products.Wheat]: 5,
+	[products.IPA]: 58,
 	[products.Stout]: 200,
-	[products.Ale]: 100,
-	[products['Alcohol Free']]: 125,
+	[products.Ale]: 1,
+	[products['Alcohol Free']]: 1,
 }
 
 function findVariable(name) {
