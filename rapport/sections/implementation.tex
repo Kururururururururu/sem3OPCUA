@@ -29,7 +29,7 @@ To give a better understanding of the system, and the integrity, we made a deplo
         \label{fig:Deployment_diagram}
     \end{figure}
 \end{center}
-Figure \ref{fig:Deployment_diagram} shows the deployment diagram of the system. The diagram shows how the different components are conncted and to give a visual understanding of the system. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is genreated during the brewing process. This data collected can be accesed and help us udnerstand and give improvments to the system. \newline
+Figure \ref{fig:Deployment_diagram} shows the deployment diagram of the system. The diagram shows how the different components are conncted and to give a visual understanding of the system. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is generated during the brewing process. This data collected can be accesed and help us udnerstand and give improvments to the system. \newline
 
 By deploying the system this way, we can ensure that the system is scalable and maintable in the future. it also enables us to add new features such as new beer recipes, or other things the client may want to help him brew beers. be encapsling the webservice into a container, we can make changes, updates and etc, which helps us reducing the risk of conflics with other parts of the system. \newline
 
@@ -46,6 +46,16 @@ Now that we have declared how the system is being deployed, its important to und
     \end{figure}
 \end{center}
 
-Figure \ref{fig:SQdiagram_implementation} shows the sequence diagram of the system. The diagram shows the behaviour and workflow between the different compononents and how the react to input. When a user selects a beer from the user-friendly interface the frontend(App.js) it will send a request to the backend, where the backend will verify the selceted beer, then the request is sent back to the fronted where the user can input the amount of beer he wants breewed. When the amount and type is selected, the brewing request is sent to the OPC or beer machine. 
+Figure \ref{fig:SQdiagram_implementation} shows the sequence diagram of the system. The diagram shows the behaviour and workflow between the different compononents and how the react to input. When a user selects a beer from the user-friendly interface the frontend(App.js) it will send a request to the backend, where the backend will verify the selected beer, then the request is sent back to the fronted where the user can input the amount of beer he wants breewed. When the amount and type is selected, the brewing request is sent to the OPC or beer machine. 
 When the brewing is done, the data for the given batch production will be sent to the database, with data about the succes of the brewing, failures and etc. This data can be handled if needed to help optimize the brewing process. The client does not get this message it work internally in our automated system. The service will sent a message to the backend saying the beer is done, here the backend sent a request to the frontend where it user get displayed the beer type and amount brewed is a success.
 Overall this is a simple representation of the sytems workflow, but it helps indicate the progress from selecting a beer to actually getting the product.
+
+\begin{center}
+    \centering
+    \begin{figure}[H]
+        \includegraphics[width=1\textwidth]{img/class_diagram.png}
+        \caption{Deployment diagram over the system}
+        \label{fig:class_diagram}
+    \end{figure}
+\end{center}
+Figure \ref{fig:class_diagram} shows the class diagram of the system. The diagram shows the different classes and how they are connected. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is generated during the brewing process. This data collected can be accesed and help us udnerstand and give improvments to the system. \newline
