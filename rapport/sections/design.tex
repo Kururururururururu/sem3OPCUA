@@ -1,18 +1,17 @@
-\section{Design}
-
 % set the problem in context.
 % summarise what you have done.
 % describe your design solution.
 % report on its performance.
 % provide key recommendations.
+\section{Design}
+The project aims to develop a web-based software solution for the hobbyist, to automate the beer production process. 
 
 \subsection{System Architecture}
-The project aims to develop a web-based software solution for the hobbyist, to automate the beer production process. 
-The architecture will consist of a user-friendly front-end developed using React, a secure back-end devloped using Node, and communication between the deployed components with the beer production machine. 
+The architecture will consist of a user-friendly front-end, a secure back-end, and communication between the deployed components with the beer production machine. 
 The system will follow a client-server model.
 
 \subsubsection{Frontend}
-The frontend of the beer production system will be a user interface (UI) developed using React
+The user interface (UI) of the beer production system is developed using React.
 React is a powerful JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces. 
 React's component-based architecture aligns with the goal of creating a user-friendly and responsive front end for the beer production application.
 
@@ -66,18 +65,21 @@ The Node.js back end will undergo thorough testing to validate its functionality
 In summary, the use of Node.js for back-end development brings scalability, real-time communication, and security to the beer production system. By leveraging the strengths of Node.js, we aim to create a robust foundation that seamlessly integrates with the front end and effectively communicates with the PLC-controlled beer production machine.
 
 \subsubsection{communication}
+The communication between the front-end and the back-end is implemented using a RESTful API. 
 
 \subsection{Simulation}
 Incorporating the provided ARsim simulation tool into our development process is a crucial aspect of this project. 
-ARsim serves as a valuable resource, enabling us to simulate and emulate the beer production process without the need for direct access to the physical machine. 
-This simulation tool will be instrumental in testing and refining our software application.
+ARsim serves as a valuable resource that enables simulation of the beer production process without the need for direct access to the physical machine. 
+%This simulation tool will be instrumental in testing and refining our software application.
 
 \subsubsection{ARsim Integration}
-The ARsim simulation tool was integrated early into our development process, to mimic the behavior of the beer machine.
-The early integration allowed us to speed up the development time right from the beginning of the project, as most of our program's functionalities could be tested directly without the need of the physical beer machine.
-This integration allows us to interact with ARsim in a manner similar to how our software would communicate with the actual hardware, and enabled multiple people to test multiple different things at once. 
-By leveraging ARsim, we can perform comprehensive testing of the software's functionalities, ensuring robustness and reliability.
+The ARsim simulation tool was integrated early into the development process, to mimic the behavior of the beer machine.
+The early integration allowed us to speed up the development time from the very beginning of the project, as most of our program's functionalities could be tested directly without the need of the physical beer machine.
+This integration also allowed us to interact with ARsim in a manner similar to how our software would communicate with the actual hardware, and enabled multiple people to test multiple different things without interfering with one another. 
+% By leveraging ARsim, we can perform comprehensive testing of the software's functionalities, ensuring robustness and reliability.
+
 \subsubsection{Testing Scenarios}
+
 
 \subsection{Data Processing and Logging}
 
