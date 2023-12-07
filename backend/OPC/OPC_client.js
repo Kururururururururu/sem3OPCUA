@@ -16,7 +16,7 @@ const PackMLCmdOptions = {
 	Clear: 5,
 }
 
-const PackMLStateOptions = {
+export const PackMLStateOptions = {
 	Deactivated: 0,
 	Clearing: 1,
 	Stopped: 2,
