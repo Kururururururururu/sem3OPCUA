@@ -115,6 +115,9 @@ app.post('/api/pass-to-queue', async (req, res) => {
 
 		await opcuaClient.connect()
 
+		const state = opcuaClient.getStateCurrent()
+		if (state != 4) throw new Error('Brewing is not possible at the moment')
+
 		if (await opcuaClient.brew(beer_type, beer_amount, speed ?? 10)) {
 			// send beer type request to queue
 			database.write(beer_type, beer_amount)// send data to db
