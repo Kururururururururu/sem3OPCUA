@@ -6,6 +6,7 @@ let client // OPC client
 let subscription // OPC subscription
 let batchId = 0
 let batchIdFromOPC = 0
+let currentState
 
 const PackMLCmdOptions = {
 	Reset: 1,
@@ -70,12 +71,12 @@ const products = {
 }
 
 const speedLimits = {
-	[products.Pilsner]: 600,
-	[products.Wheat]: 300,
-	[products.IPA]: 150,
+	[products.Pilsner]: 263,
+	[products.Wheat]: 5,
+	[products.IPA]: 58,
 	[products.Stout]: 200,
-	[products.Ale]: 100,
-	[products['Alcohol Free']]: 125,
+	[products.Ale]: 1,
+	[products['Alcohol Free']]: 1,
 }
 
 function findVariable(name) {
@@ -100,18 +101,17 @@ module.exports = {
 			session = await client.createSession()
 			// make subcribe if there is none
 			if (!subscription) {
-				module.exports.subscribe('BatchId', (value) => {
+				module.exports.subscribe('StateCurrent', (value) => {
 					const currentValue = value.value
-					console.log('BatchId changed to ', currentValue)
-					if (currentValue > 0) {
-						batchIdFromOPC = currentValue
+					if (currentValue !== currentState) {
+						console.log('State changed to', currentValue)
+						currentState = currentValue
 					}
 				})
 			}
 		} catch (err) {
 			if (err instanceof Error) {
 				console.log(err.message)
-				throw err
 			}
 		}
 	},
@@ -262,6 +262,9 @@ module.exports = {
 				const StopReason = await module.exports.read('StopReason')
 				if (StopReason === 10 || StopReason === 11) {
 					await module.exports.maintenence()
+				}
+				while (currentState !== PackMLStateOptions.Idle) {
+					await new Promise((resolve) => setTimeout(resolve, 1000))
 				}
 				await module.exports.write(node.variable, node.value, node.dataType)
 			}
