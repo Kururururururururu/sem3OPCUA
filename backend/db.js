@@ -10,15 +10,21 @@ const pool = new Pool({
 })
 
 module.exports = {
-	write: (beer_type, amount) => {
-		module.exports.connect()
-		pool.query(`INSERT INTO beers (beer_type, amount, date) VALUES (${beer_type}, ${amount}, NOW())`)
+	write: async (beer_type, amount) => {
+		await module.exports.connect()
+		await pool.query(`INSERT INTO beers (beer_type, amount, time) VALUES ($1, $2, NOW())`, [beer_type, amount])
 		module.exports.disconnect()
 	},
 
-	read: (beer_id) => {
-		module.exports.connect()
-		return pool.query(`SELECT * FROM beers WHERE id=${beer_id}`)
+	read: async (beer_id) => {
+		await module.exports.connect()
+		return await pool.query(`SELECT * FROM beers WHERE id=${beer_id}`)
+		.then(module.exports.disconnect())
+	},
+
+	query: async (query) => {
+		await module.exports.connect()
+		return await pool.query(query)
 		.then(module.exports.disconnect())
 	},
 
