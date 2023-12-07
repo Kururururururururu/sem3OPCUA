@@ -82,7 +82,7 @@ function findVariable(name) {
 	return variables.find((v) => v.name === name)
 }
 
-const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://192.168.0.122:4840'
+const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://127.0.0.1:4840'
 
 module.exports = {
 	getBatchId: () => batchIdFromOPC,

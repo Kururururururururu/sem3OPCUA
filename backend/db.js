@@ -10,7 +10,18 @@ const pool = new Pool({
 })
 
 module.exports = {
-	query: (text, params) => pool.query(text, params),
+	write: (beer_type, amount) => {
+		module.exports.connect()
+		pool.query(`INSERT INTO beers (beer_type, amount, date) VALUES (${beer_type}, ${amount}, NOW())`)
+		module.exports.disconnect()
+	},
+
+	read: (beer_id) => {
+		module.exports.connect()
+		return pool.query(`SELECT * FROM beers WHERE id=${beer_id}`)
+		.then(module.exports.disconnect())
+	},
+
 	connect: async (options) => {
 		try {
 			await pool.connect(options)
