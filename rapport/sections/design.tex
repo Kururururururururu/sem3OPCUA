@@ -4,15 +4,22 @@
 % report on its performance.
 % provide key recommendations.
 \section{Design}
-The project aims to develop a web-based software solution for the hobbyist, to automate the beer production process. 
+Since the project aims to develop a solution to automate and thereby ease the beer production process for the hobbyists, our design solution is strictly developed based on the previously mentioned personas.
+This process can under normal circumstances be a rather complex and very manual process, the user would have to manually control the temperature, add the correct ingredients and the right amount at the right time, while continously monitoring the process to ensure that everything is going according to plan.
+The hobbyist might want to produce both produce multiple amounts, but also different kinds of beer. This would require the user to look-up each recipe every time to do the same recipe calculations based on the desired amount and beer type with every new batch, and manually monitor and possible adjust the temperatures of the ingredients throughout the process.
+This process can quickly become overwhelming and tedious, and might lead to human errors as the production expands and possibly end up taking the joy out of the hobby.
+
+Our design goal is to make brewing easy and accessible to everyone, even for the least technical of peopple. We want to solve this issue by having a simple and clean user interface, without too much uneccessary information, where all the heavy calculations, continuous monitoring, and processing is done by software behind the scenes.
+ 
+The design aims to deter people from the seemingly advanced process of beer production by offering an intuitive and easy-to-use platform that removes the complexity and makes brewing accessible to everyone.
 
 \subsection{System Architecture}
-The architecture will consist of a user-friendly front-end, a secure back-end, and communication between the deployed components with the beer production machine. 
-The system will follow a client-server model.
+The architecture of the system is based on the client-server model and include three deployments: The web-service, the database service, and the physical beer machine. 
+The Web Service will consist of the front-end, back-end, and the OPC Client. There will be a direct line of communication between the user input in the user interface, through the data processing and handling in the back-end, to the OPC Client that will handle the secure communication and instructions to the physical beer machine.
+This deployment model ensures a clear separation of concerns, enabling efficient scaling in the future, while easing the maintenance of individual components.
 
 \subsubsection{Frontend}
-The user interface (UI) of the beer production system is developed using React.
-React is a powerful JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces. 
+The user interface (UI) of the beer production system is developed using React, a powerful JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces. 
 React's component-based architecture aligns with the goal of creating a user-friendly and responsive front end for the beer production application.
 
 Component-Based Design
