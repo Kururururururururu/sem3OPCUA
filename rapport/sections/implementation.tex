@@ -8,8 +8,8 @@ While also seeing what did not get done in the current sprint. If a feature was 
 
 \subsubsection{Technologies}
 To help us develop the system, we decided to use some different software technologies that includes Docker, Node.js, React, OPC-UA. All the listed thing helped us develop the system the way we wanted it.
-Docker is a containerization feture that allows us to run several applications in a single container. We decided to use docker to run the OPC-UA client, frontend and backend. By using the containerization technology we could boot the applications simultaneously, instead of running them seperate in their own file. This saved us alot of time and trouble.\newline
-The backend is developed in Node.js, which is a javascript package. The reason that we decided to use node.js was because the frontend is developed in React, which also is a javascript package. This helped us to get a secure and easy connection between the frontend and the backned without to much effort. The OPC-UA client is developed in javascript, with a package called node-opcua. This is an open source package that allows connection and communication with an OPC-UA server. \newline
+Docker is a containerization feture that allows us to run several applications in a single container. We decided to use docker to run the OPC-UA client, frontend and backend. By using the containerization technology we could boot the applications simultaneously, instead of running them seperate in their own file. This saved us alot of time and trouble.\newline\newline
+The backend is developed in Node.js, which is a javascript package. The reason that we decided to use node.js was because the frontend is developed in React, which also is a javascript package. This helped us to get a secure and easy connection between the frontend and the backned without to much effort. The OPC-UA client is developed in javascript, with a package called node-opcua. This is an open source package that allows connection and communication with an OPC-UA server.\newline\newline
 The reason we went with node-opcua instead of the provided MILO package in Java 8, was because, we already decided that we wanted to build in backend and frontend in javascript, and by using node-opcua we could use the same language for the OPC-UA client. This allowed us to establish a secure connections without failures, and it also allows us a better integrity of the system. 
 By using javascript for the overall structure of the system, we could ensure that the system is scalable and maintainable in the future. Aswell as not having multiple different programming languages in the system, which can lead to conflics and other problems. \newline
 
@@ -29,7 +29,7 @@ To give a better understanding of the system, and the integrity, we made a deplo
         \label{fig:Deployment_diagram}
     \end{figure}
 \end{center}
-Figure \ref{fig:Deployment_diagram} shows the deployment diagram of the system. The diagram shows how the different components are conncted and to give a visual understanding of the system. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is generated during the brewing process. This data collected can be accesed and help us udnerstand and give improvments to the system. \newline
+Figure \ref{fig:Deployment_diagram} shows the deployment diagram of the system. The diagram shows how the different components are conncted and to give a visual understanding of the system. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is generated during the brewing process. This data collected can be accesed and help us understand and give improvements to the system. \newline
 
 By deploying the system this way, we can ensure that the system is scalable and maintable in the future. it also enables us to add new features such as new beer recipes, or other things the client may want to help him brew beers. be encapsling the webservice into a container, we can make changes, updates and etc, which helps us reducing the risk of conflics with other parts of the system. \newline
 
@@ -50,7 +50,7 @@ Figure \ref{fig:SQdiagram_implementation} shows the sequence diagram of the syst
 When the brewing is done, the data for the given batch production will be sent to the database, with data about the succes of the brewing, failures and etc. This data can be handled if needed to help optimize the brewing process. The client does not get this message it work internally in our automated system. The service will sent a message to the backend saying the beer is done, here the backend sent a request to the frontend where it user get displayed the beer type and amount brewed is a success.
 Overall this is a simple representation of the sytems workflow, but it helps indicate the progress from selecting a beer to actually getting the product.
 
-\subsubsubsection{Sequence diagram}
+\subsubsubsection{Class diagram}
 
 \begin{center}
     \centering
@@ -60,4 +60,59 @@ Overall this is a simple representation of the sytems workflow, but it helps ind
         \label{fig:class_diagram}
     \end{figure}
 \end{center}
-Figure \ref{fig:class_diagram} shows the class diagram of the system. The diagram shows the different classes and how they are connected. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is generated during the brewing process. This data collected can be accesed and help us udnerstand and give improvments to the system. \newline
+Figure \ref{fig:class_diagram} shows the class diagram of the system. The diagram shows the different classes and how they are connected. The system is divided into three components, a dockerfile that boots up the backend, frontend and OPCUA-Client, we have the beer machine itself, and lastly the database which enables us to save data that is generated during the brewing process. This data collected can be accesed and help us understand and give improvements to the system.
+
+\subsubsubsection{index.js}
+
+The index.js file is responsible for our backend, which handles routing and requests. Currently we have the following endpoints
+\begin{enumerate}
+    \item {POST ('/api/pass-to-queue')}
+    \item {GET ('/api/state')}
+    \item {GET ('/api/batch')}
+    \item {GET ('/api/inventory')}
+\end{enumerate}
+
+Our only \textit{POST} endpoint, which is the first in the list, is responsible for creating a brewing order. It recevies a body of type JSON with the keys \textit{'speed'},\textit{'amount'} and \textit{'type'}, which is the beer type. However the speed is not required. If there isn't any value entered, it will have a fallback of 10.
+While running the brewing method, it will continously update the state, as we have subscribed to the node, that holds the stateCurrent value. If it isn't in \textit{execute}, which is the state that it is in, when it is brewing, it will brew. Otherwise if it is brewing (in execute state or 6 of value), then it will send an error to the user and not run that brewing order.
+This way it can never brew if it is already brewing. \newline
+
+Our 3 \textit{GET} endpoints is just for the client to receive data. Which is the state, batchId and inventory, respectively.
+And all of these \textit{GET} endpoints are server-sent events (SSE). This means that the user will get the information streamed down continously. \newline
+
+Our most essential API endpoint is our POST request, as it is the one to make a brewing order. Here is some of our code so show what is happening, when a user makes an order
+
+\begin{center}
+    \centering
+    \begin{figure}[H]
+        \begin{minted}[tabsize=2,breaklines]{javascript}
+            app.post('/api/pass-to-queue', async (req, res) => {
+                try {
+                    // input validation code...
+                    await opcuaClient.connect()
+        
+                    const state = opcuaClient.getStateCurrent()
+                    if (state == opcuaClient.PackMLStateOptions.Execute) throw new Error('Brewing is not possible at the moment')
+        
+                    if (await opcuaClient.brew(beer_type, beer_amount, speed ?? 10)) {
+                        // send beer type request to queue
+                        res.status(200) // if ok, return status code OK
+                        res.send({ status: 'ok' })
+                    } else {
+                        res.status(418) // refuse to brew
+                        res.send({ status: 'error', error: 'Brewing failed' })
+                    }
+                } catch (error) {
+                    console.error(error)
+                    res.status(500).send({ error: error.message, status: 'error' })
+                }
+            })
+        \end{minted}
+        \caption{Code for our \textit{POST} endpoint}
+        \label{fig:pass_to_queue_api}
+    \end{figure}
+\end{center}
+Figure \ref{fig:pass_to_queue_api} shows the code for our \textit{POST} endpoint. It is responsible for making a brewing order. It first checks if the state is in \textit{execute}, which is the state it is in, when it is brewing. If it is, then it will throw an error, as it is not possible to brew, when it is already brewing. Otherwise it will brew the beer, and if it is successful, it will send a status code of 200, which means OK. Otherwise it will send a status code of 418, which means I'm a teapot. This is just a joke, as it is not possible to brew, when it is already brewing. But it is a valid status code, so we decided to use it.
+
+\subsubsubsection{OPC\_client.js}
+
+
