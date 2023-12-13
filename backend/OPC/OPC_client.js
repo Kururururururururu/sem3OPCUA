@@ -6,6 +6,7 @@ let client // OPC client
 let subscription // OPC subscription
 let batchId = 0
 let batchIdFromOPC = 0
+let currentState
 
 const PackMLCmdOptions = {
 	Reset: 1,
@@ -15,7 +16,7 @@ const PackMLCmdOptions = {
 	Clear: 5,
 }
 
-const PackMLStateOptions = {
+ const PackMLStateOptions = {
 	Deactivated: 0,
 	Clearing: 1,
 	Stopped: 2,
@@ -34,6 +35,7 @@ const PackMLStateOptions = {
 	Deactivating: 18,
 	Activating: 19,
 }
+module.exports.PackMLStateOptions = PackMLStateOptions;
 
 const variables = [
 	{ name: 'Temperature', path: 'ns=6;s=::Program:Data.Value.Temperature' },
@@ -70,22 +72,23 @@ const products = {
 }
 
 const speedLimits = {
-	[products.Pilsner]: 600,
-	[products.Wheat]: 300,
-	[products.IPA]: 150,
+	[products.Pilsner]: 263,
+	[products.Wheat]: 5,
+	[products.IPA]: 58,
 	[products.Stout]: 200,
-	[products.Ale]: 100,
-	[products['Alcohol Free']]: 125,
+	[products.Ale]: 1,
+	[products['Alcohol Free']]: 1,
 }
 
 function findVariable(name) {
 	return variables.find((v) => v.name === name)
 }
 
-const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://192.168.0.122:4840'
+const opcEndpointUrl = process.env.OPC_URL || 'opc.tcp://127.0.0.1:4840'
 
 module.exports = {
 	getBatchId: () => batchIdFromOPC,
+	getStateCurrent: () => currentState,
 	connect: async () => {
 		try {
 			if (session) {
@@ -100,18 +103,17 @@ module.exports = {
 			session = await client.createSession()
 			// make subcribe if there is none
 			if (!subscription) {
-				module.exports.subscribe('BatchId', (value) => {
+				module.exports.subscribe('StateCurrent', (value) => {
 					const currentValue = value.value
-					console.log('BatchId changed to ', currentValue)
-					if (currentValue > 0) {
-						batchIdFromOPC = currentValue
+					if (currentValue !== currentState) {
+						console.log('State changed to', currentValue)
+						currentState = currentValue
 					}
 				})
 			}
 		} catch (err) {
 			if (err instanceof Error) {
 				console.log(err.message)
-				throw err
 			}
 		}
 	},

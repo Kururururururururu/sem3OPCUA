@@ -1,5 +1,4 @@
 import BeerContainer from './beer-container.jsx'
-import { beers } from '../../../constants/beers.js'
 import { useEffect, useState } from 'react'
 
 const inventoryItems = ['wheat', 'barley', 'hops', 'yeast', 'malt']
