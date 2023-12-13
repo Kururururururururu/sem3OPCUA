@@ -4,45 +4,26 @@
 % report on its performance.
 % provide key recommendations.
 \section{Design}
-Since the project aims to develop a solution to automate and thereby ease the beer production process for the hobbyists, our design solution is strictly developed based on the previously mentioned personas.
-This process can under normal circumstances be a rather complex and very manual process, the user would have to manually control the temperature, add the correct ingredients and the right amount at the right time, while continously monitoring the process to ensure that everything is going according to plan.
-The hobbyist might want to produce both produce multiple amounts, but also different kinds of beer. This would require the user to look-up each recipe every time to do the same recipe calculations based on the desired amount and beer type with every new batch, and manually monitor and possible adjust the temperatures of the ingredients throughout the process.
-This process can quickly become overwhelming and tedious, and might lead to human errors as the production expands and possibly end up taking the joy out of the hobby.
-
-Our design goal is to make brewing easy and accessible to everyone, even for the least technical of peopple. We want to solve this issue by having a simple and clean user interface, without too much uneccessary information, where all the heavy calculations, continuous monitoring, and processing is done by software behind the scenes.
- 
-The design aims to deter people from the seemingly advanced process of beer production by offering an intuitive and easy-to-use platform that removes the complexity and makes brewing accessible to everyone.
+The project aims to develop a solution to automate and thereby ease the beer production process for the hobbyists, our design solution is strictly developed based on the previously mentioned personas and requirements.\newline
+This process can under normal circumstances be a rather complex and very manual process, the user would have to manually control the temperature, add the correct ingredients and the right amount at the right time, while continuously monitoring the process to ensure that everything is going according to plan.\newline
+The user might want to produce both produce multiple amounts, but also different kinds of beer. This would require the user to look-up each recipe every time to do the same recipe calculations based on the desired amount and beer type with every new batch, while monitoring and possibly adjusting the temperatures of the ingredients throughout the whole process for consistency.\newline
+This process can quickly become overwhelming and tedious, especially for newcomers, and might lead to human errors as the production expands and in worst case, end up taking the joy out of the hobby.\newline
+Our design goal is to make brewing easy and accessible to everyone, even for the least technical of people. We want to solve this issue by having a simple and clean user interface, without all the unnecessary information, where all the heavy calculations, continuous monitoring, and processing is done by software behind the scenes.\newline
+The design aims to deter people from the seemingly advanced process of beer production by offering an intuitive and easy-to-use platform that removes the complexity and makes brewing accessible to every intrigued hobbyist.
 
 \subsection{System Architecture}
-The architecture of the system is based on the client-server model and include three deployments: The web-service, the database service, and the physical beer machine. 
-The Web Service will consist of the front-end, back-end, and the OPC Client. There will be a direct line of communication between the user input in the user interface, through the data processing and handling in the back-end, to the OPC Client that will handle the secure communication and instructions to the physical beer machine.
+The architecture of the system is based on the client-server model and include three deployments: The web-service, the database service, and the physical beer machine. \newline
+The Web Service will consist of the front-end, back-end, and the OPC Client. There will be a direct line of communication between the user input in the user interface, through the data processing and handling in the backend, to the OPC Client that will handle the secure communication and instructions to the physical beer machine. \newline
+The communication between the front-end and the back-end is implemented using a RESTful API. \newline
 This deployment model ensures a clear separation of concerns, enabling efficient scaling in the future, while easing the maintenance of individual components.
 
 \subsubsection{Frontend}
 The user interface (UI) of the beer production system is developed using React, a powerful and easy-to-use JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces, which perfectly aligned with our goal of creating a user-friendly and responsive frontend for the beer production application.
-
-Component-Based Design
-React's component-based structure allows for the modular development of UI elements, enhancing code reusability and maintainability. Each aspect of the user interface, such as recipe selection, brewing process initiation, and notifications, will be encapsulated within distinct React components.
-
-Responsive and Intuitive GUI
-The React-based front end will prioritize responsiveness, ensuring a seamless user experience across different devices and screen sizes. The GUI will be intuitively designed to provide clear instructions and easy navigation for users, regardless of their level of brewing expertise. React's virtual DOM (Document Object Model) will be leveraged to optimize rendering performance and enhance the overall responsiveness of the interface.
-
-State Management
-React's state management capabilities will be utilized to efficiently handle and update the application's state as users interact with the system.
-
-Integration with Back-End
-The React front end will seamlessly integrate with the Java-based back end, establishing a robust connection for data exchange between the user interface and the beer production machine. This integration allows for smooth communication, enabling users to interact with the system and receive real-time feedback on the brewing process.
-
-User-Friendly Design Principles
-The design principles of the React-based front end will align with the user-friendly goals of the project. Minimal input fields and a streamlined layout will be implemented to simplify the brewing process for users with varying levels of experience.
-
-Testing and Iterative Development
-The React front end will undergo rigorous testing to ensure compatibility, responsiveness, and usability. 
-
-In summary, the use of React in the front-end design ensured us a highly adaptable, responsive, and user-friendly interface for the beer production system. The component-based approach and integration capabilities with the backend contributed to the overall success of the project in meeting its requirements.
+The React library offers a modular development environment in form of it's component-based design structure, this allows for the development of reusable UI elements, that can be combined to effortlessly form complex user interfaces. This helped the project to meet requirement U-01, to develop a user-friendly design, as each component can be developed and tested individually, and then combined to form the final UI. \newline
+The React library also offers a virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM, this allows for efficient rendering of the UI, as the virtual DOM only updates the necessary components, instead of re-rendering the whole UI every time a change is made. This helped the project to meet requirement U-02, to develop a responsive design, as the virtual DOM allows for efficient rendering of the UI, which in turn allows for a more responsive UI. \newline
 
 \subsubsection{Backend}
-The back-end component of the beer production system will be implemented using Node.js, a versatile JavaScript runtime known for its efficiency in building scalable and high-performance server-side applications. Leveraging the strengths of Node.js, we aim to create a secure and reliable back-end that seamlessly communicates with the front end and the PLC-controlled beer production machine.
+The backend component of the beer production system will be implemented using Node.js, a versatile JavaScript runtime known for its efficiency in building scalable and high-performance server-side applications. Leveraging the strengths of Node.js, we aim to create a secure and reliable back-end that seamlessly communicates with the front end and the PLC-controlled beer production machine.
 
 Node.js for Asynchronous Operations
 Node.js excels in handling asynchronous operations, making it well-suited for scenarios where real-time communication and responsiveness are crucial. This feature aligns perfectly with the requirements of our beer production system, allowing for efficient communication between the user interface and the hardware components.
