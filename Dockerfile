@@ -8,7 +8,7 @@ WORKDIR /app
 COPY backend /app/backend
 
 # Copy the dist folder from the frontend directory
-COPY frontend/dist /app/frontend/dist
+COPY frontend /app/frontend
 
 # Install dependencies in backend directory and then frontend directory
 WORKDIR /app/backend
@@ -16,6 +16,7 @@ RUN npm install
 
 WORKDIR /app/frontend
 RUN npm install
+RUN npm run build
 
 WORKDIR /app/backend/OPC
 RUN npm install
@@ -24,12 +25,17 @@ RUN npm install
 WORKDIR /app
 
 # Expose the port on which the application will run
-EXPOSE 80
+EXPOSE 3000
 EXPOSE 4840
 
 # Set the environment variable for the port
-ENV PORT=80
+ENV PORT=3000
 ENV OPC_URL=opc.tcp://host.docker.internal:4840
+ENV PG_HOST=monorail.proxy.rlwy.net
+ENV PG_PORT=55193
+ENV PG_USER=postgres
+ENV PG_PASSWORD=c1CA1Dg-A15Ce5a5caGDDbcf3aaaFCgC
+ENV PG_DATABASE=railway
 
 WORKDIR /app/backend
 

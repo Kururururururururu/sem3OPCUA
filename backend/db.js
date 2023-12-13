@@ -9,6 +9,8 @@ const pool = new Pool({
 	database: process.env.PG_DATABASE,
 })
 
+let client
+
 module.exports = {
 	write: async (beer_type, amount) => {
 		await module.exports.connect()
@@ -18,19 +20,17 @@ module.exports = {
 
 	read: async (beer_id) => {
 		await module.exports.connect()
-		return await pool.query(`SELECT * FROM beers WHERE id=${beer_id}`)
-		.then(module.exports.disconnect())
+		return await pool.query(`SELECT * FROM beers WHERE id=${beer_id}`).then(module.exports.disconnect())
 	},
 
 	query: async (query) => {
 		await module.exports.connect()
-		return await pool.query(query)
-		.then(module.exports.disconnect())
+		return await pool.query(query).then(module.exports.disconnect())
 	},
 
 	connect: async (options) => {
 		try {
-			await pool.connect(options)
+			client = await pool.connect()
 			console.log('Connected to database')
 		} catch (err) {
 			console.log(err.message)
@@ -39,7 +39,7 @@ module.exports = {
 	},
 	disconnect: async () => {
 		try {
-			await pool.end()
+			await client.release()
 			console.log('Disconnected from database')
 		} catch (err) {
 			console.log(err.message)
