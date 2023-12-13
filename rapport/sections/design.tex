@@ -14,13 +14,26 @@ The design aims to deter people from the seemingly advanced process of beer prod
 \subsection{System Architecture}
 The architecture of the system is based on the client-server model and include three deployments: The web-service, the database service, and the physical beer machine. \newline
 The Web Service will consist of the front-end, back-end, and the OPC Client. There will be a direct line of communication between the user input in the user interface, through the data processing and handling in the backend, to the OPC Client that will handle the secure communication and instructions to the physical beer machine. \newline
-The communication between the front-end and the back-end is implemented using a RESTful API. \newline
+The communication between the front-end, the back-end and the beer machine is implemented using a RESTful API. \newline
 This deployment model ensures a clear separation of concerns, enabling efficient scaling in the future, while easing the maintenance of individual components.
 
 \subsubsection{Frontend}
 The user interface (UI) of the beer production system is developed using React, a powerful and easy-to-use JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces, which perfectly aligned with our goal of creating a user-friendly and responsive frontend for the beer production application.
-The React library offers a modular development environment in form of it's component-based design structure, this allows for the development of reusable UI elements, that can be combined to effortlessly form complex user interfaces. This helped the project to meet requirement U-01, to develop a user-friendly design, as each component can be developed and tested individually, and then combined to form the final UI. \newline
-The React library also offers a virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM, this allows for efficient rendering of the UI, as the virtual DOM only updates the necessary components, instead of re-rendering the whole UI every time a change is made. This helped the project to meet requirement U-02, to develop a responsive design, as the virtual DOM allows for efficient rendering of the UI, which in turn allows for a more responsive UI. \newline
+In addition, Reacts offers a modular development environment in form of it's component-based design structure, this allows for the development of reusable UI elements, that can be combined to effortlessly form complex user interfaces. This helped the project to meet requirement U-01, to develop a user-friendly design, as each component can be developed and tested individually, before it's combined to form the final UI. \newline
+The library also offers a virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM, this allows for efficient rendering of the UI, as the virtual DOM only updates the necessary components, instead of re-rendering the whole UI every time a change is made. This helped the project to meet requirement U-02, to develop a responsive design, as the virtual DOM allows for efficient rendering of the UI, which in turn allows for a more responsive UI. \newline
+Lastly it offered us a lot of flexibility in terms of state management, which is a crucial aspect of the project, as the UI needs to be able to handle a lot of different states, such as the different stages of the beer production process, and the different states of the beer machine. This helped the project to meet requirement U-03, to develop a dynamic design, as the UI can be updated to reflect the current state of the beer machine and it's progress. \newline
+All these features, combined with the fact that it is a very popular and well-documented library, made it the perfect choice for the development of the user interface of the beer production system.
+\subsubsubsection{User Interface}
+To ensure we met requirement U-01, to develop a user-friendly design, we decided to develop a clean and simple user interface, without all the unnecessary information, to make it as easy as possible for the user to navigate and use the application. \newline
+Therefore, an early draft of the user interface was developed to get a clear idea of the overall design and layout of the application. \newline
+\begin{center}
+  \centering
+  \begin{figure}[H]
+      \includegraphics[width=1\textwidth]{img/frontend-draft.png}
+      \caption{Early draft of the user interface}
+      \label{fig:Frontend_draft}
+  \end{figure}
+\end{center}
 
 \subsubsection{Backend}
 The backend component of the beer production system will be implemented using Node.js, a versatile JavaScript runtime known for its efficiency in building scalable and high-performance server-side applications. Leveraging the strengths of Node.js, we aim to create a secure and reliable back-end that seamlessly communicates with the front end and the PLC-controlled beer production machine.
