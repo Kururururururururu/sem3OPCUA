@@ -1,18 +1,25 @@
 
-\section{Analysis}
-
-In this project we have worked on creating a web interface that can be used to interact with a beer production 
-machine. In order to ensure this interaction between the beer machine and our website, we have used OPC UA.\newline
-Our plan with this web interface is for it to be user-friendly and therefore very easy to navigate and use. 
+\section{Case-analysis}
+In our project we have carefully considered the target group and adapted our vision for the project to comply with the stakeholders' needs.
+We have based our plan on the fact that our target group primarly consists of people who have a passion for 
+producing beer in small quantities. We imagine that it could be intended for private consumption. The target group is described further in the personas section.
+To accommodate the stakeholders' expectations we have decided to develop a user-friendly web interface. We define a user-friendly web interface as being very easy to navigate and use.
 In addition to the user interface being practical, we also want our program to be reliable and to be able to run a 
-beer production without major losses. This has to be done without needing a lot of input from the user, making 
-it mostly automatic.\newline
-We have based our plan on the fact that our target group primarly consists of people who have a passion for or a hobby of 
-producing beer in small quantities. We imagine that it could be intended for own consumption. Further described in the personas section.\newline
+beer production without major losses. This has to be done without needing a lot of input from the user. Thus, making it mostly automatic.
+
+In our project we have relied on the knowledge we have gained through the various courses we have had this semester.
+This knowledge has impacted our project differently. We have for example identified the applicability of the knowledge gained in 'Industrial Cyber-Physical Systems' when using OPC UA in the 
+interaction between the web interface and the beer production machine. Additionally, 'Calculus and Linear Algebra' has contributed to our ability to calculate the optimal production speed for our machine.
+This allowed us to maintain a satisfactory error margin. Moreover, the course informed our decision to plot and, thereby, visually present our data.
+Contrastingly, utilizing the knowledge from 'Operating Systems and Distributed Systems' allowed us to develop a Docker Container, which was beneficial in relation to the database.
+It was also adventageous for our project to apply our experiences from 'Web Technologies'. Specifically, the course laid the foundation for us to build the web interface as we for example relied on 
+our experiences with HTML, CSS, and JavaScript.
+
+
 
 \subsection{Personas}
 To define the target group for the project and to help ourselves understand the project's possibilities and functionalities, 
-we have decided to make some personas. These characters are fictitious and based on the project's stakeholder. \newline
+we have decided to make some personas. These characters are fictitious and based on the project's stakeholders. \newline
 
 \begin{table}[htb]
     \begin{center}
@@ -20,9 +27,9 @@ we have decided to make some personas. These characters are fictitious and based
             \hline
             \textbf{Kim, beer hobbyist}                                                                                                                                                                                                                        \\
             \hline
-            \\ \textbf{Bio:} Kim is 42 years of age, he has a big passion for beers. It has been a big tradition in his family to brew their own beer. He recently decided that he wanted his own brewing machine to help him brew beer. He is not experienced in computers, so it must be user-friendly.  \\
+            \\ \textbf{Bio:} Kim is 42 years of age and he has a big passion for beers. It has been a big tradition in his family to brew their own beer. He recently decided that he wanted his own brewing machine to help him brew beer. He is not experienced in computers, so it must be user-friendly.  \\
             \\
-            \textbf{Goal:} Kim is very excited to get his new brewing machine for his garage. He does have some concerns when it comes to the software part. He hopes that the brewing machine is easy to operate so that he can make beers when he wants too. \\
+            \textbf{Goal:} Kim is very excited to get his new brewing machine for his garage. He does have some concerns when it comes to the software part. He hopes that the brewing machine is easy to operate so that he can make beers whenever he wants to. \\
             \hline
         \end{tabular}
         \caption{Persona Kim}
@@ -38,7 +45,7 @@ we have decided to make some personas. These characters are fictitious and based
             \hline
             \\ \textbf{Bio:} Lars is 61 years of age and works as a lawyer. He always works and don't have a lot of time to spare. He has a passion for beers and would love to brew his own. His time is limited so the process of brewing should be simple and efficient.  \\
             \\
-            \textbf{Goal:} Lars want to create quality beer, without too much effort in the brewing process. He needs a machine that is user-friendly while also being effective. \\
+            \textbf{Goal:} Lars wants to create quality beer without too much effort in the brewing process. He needs a machine that is user-friendly while also being effective. \\
             \hline
         \end{tabular}
         \caption{Persona Lars}
@@ -52,9 +59,9 @@ we have decided to make some personas. These characters are fictitious and based
             \hline
             \textbf{Anna, Automation Enthusiast}                                                                                                                                                              \\
             \hline
-            \\ \textbf{Bio:} Anna, 28, is an automation nerd. She has always been impressed by machines that are automated. She is passionate about beers, and have brewed some before manually, but recently found interest in getting an automatic brewing machine for beers.  \\
+            \\ \textbf{Bio:} Anna is 28 years of age and is an automation nerd. She has always been impressed by machines that are automated. She is passionate about beers and has brewed some before manually. However, recently she has had interest in getting an automatic brewing machine.  \\
             \\
-            \textbf{Goal:} Anna aims to achieve tasty beers with only one click, which is selecting the beer she wants brewed with the new machine, she can get that, while also having an automated machine. \\
+            \textbf{Goal:} Anna aims to achieve tasty beers with only one click, which selects the beer she wants brewed.\\
             \hline
         \end{tabular}
         \caption{Persona Anna}
@@ -64,25 +71,27 @@ we have decided to make some personas. These characters are fictitious and based
 
 \subsection{User Stories}
 
-With the help of our personas and our requirements, we have decided to create some 'user stories' because they can help 
-describe the functionality of a system from an end user's perspective.
+We have decided to create some 'user stories' which together with the 'personas' lay the foundation for the development of requirements.
+The 'user stories' enable us to describe the functionality of a system from an end user's perspective.
+
+US-8, US-10
 
 \begin{table}[H]
     \begin{center}
         \sloppy
         \begin{longtable}{|p{1cm}|p{11cm}|c|c|}
             \hline
-            ID    & Stories                                                                                                                       & Estimation & Moscow \\ \hline
-            US-1  & As a user I want the interface to be user-friendly, so that everyone can use it                                               & 9          & M      \\ \hline
-            US-2  & As a user I want some already defined beers so that I can select the beer I want without too much thought                     & 8          & M      \\ \hline
-            US-3  & As a user I want the brewing process to be automated so that I can click on a beer, it will start brewing                     & 7          & M      \\ \hline
-            US-4  & As a user I want the macine to handle difficulties automatically like maintenance so that I don't have to do anything         & 8          & M      \\ \hline
-            US-5  & As a user I want to get displayed different data while the machine is brewing so that I can look at data                      & 5          & C      \\ \hline
-            US-6  & As a user I want the machine to be reliable so that I am guaranteed the beers is good quality                                 & 6          & S      \\ \hline
-            US-7  & As a user I want the machine to be efficient so that I don't have to wait too long to get a beer                              & 5          & C      \\ \hline
-            US-8  & As a user I want the machine to be scalable so that I can add new beers to the machine                                        & 4          & C      \\ \hline
-            US-9  & As a user I want the machine to have a quick repond time so that I don't have to wait for the machine to understand the input & 3          & W      \\ \hline
-            US-10 & As a user I want the machine to be able to handle different amount of beers so that I can choose the amount I want            & 3          & W      \\ \hline
+            ID    & Stories                                                                                                                                    & Estimation & Moscow \\ \hline
+            US-1  & As a user I want the interface to be user-friendly, so that I easily navigate it                                                           & 9          & M      \\ \hline
+            US-2  & As a user I want some already defined beers so that I can select the beer I want without too much effort                                   & 8          & M      \\ \hline
+            US-3  & As a user I want the brewing process to be automated so that when I click on a specific button it will brew the corresponding beer         & 7          & M      \\ \hline
+            US-4  & As a user I want the machine to automatically handle difficulties such as maintenance so that I don't have to do anything                  & 8          & M      \\ \hline
+            US-5  & As a user I want to get displayed different data while the machine is brewing so I can keep track of the machine's status                  & 5          & C      \\ \hline
+            US-6  & As a user I want the machine to be reliable so that I am guaranteed that the beers are produced with only limited issues                   & 6          & S      \\ \hline
+            US-7  & As a user I want the machine to be efficient so that I don't have to wait too long to get a beer                                           & 5          & C      \\ \hline
+            US-8  & As a user I want the machine to be scalable so that I can add new beers to the machine                                                     & 4          & C      \\ \hline
+            US-9  & As a user I want the machine to have a quick reponse time so that I am ensured that the machine correctly understands the input            & 3          & W      \\ \hline
+            US-10 & As a user I want the machine to be able to handle different amount of beers so that I can choose the amount I want                         & 3          & W      \\ \hline
 
             \caption{User stories for the beer machine}
             \label{tab:user_stories}
