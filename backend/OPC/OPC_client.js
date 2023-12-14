@@ -3,7 +3,8 @@ const { MonitoringMode } = require('node-opcua-types')
 const { TimestampsToReturn } = require('node-opcua-data-value')
 let session // OPC session
 let client // OPC client
-let subscription // OPC subscription
+let stateSubscription // OPC subscription
+let stopReasonSubscription // OPC subscription
 let batchId = 0
 let batchIdFromOPC = 0
 let currentState
@@ -16,7 +17,7 @@ const PackMLCmdOptions = {
 	Clear: 5,
 }
 
- const PackMLStateOptions = {
+const PackMLStateOptions = {
 	Deactivated: 0,
 	Clearing: 1,
 	Stopped: 2,
@@ -35,7 +36,7 @@ const PackMLCmdOptions = {
 	Deactivating: 18,
 	Activating: 19,
 }
-module.exports.PackMLStateOptions = PackMLStateOptions;
+module.exports.PackMLStateOptions = PackMLStateOptions
 
 const variables = [
 	{ name: 'Temperature', path: 'ns=6;s=::Program:Data.Value.Temperature' },
@@ -102,12 +103,22 @@ module.exports = {
 			await client.connect(opcEndpointUrl).then(() => console.log('Session created!'))
 			session = await client.createSession()
 			// make subcribe if there is none
-			if (!subscription) {
+			if (!stateSubscription) {
 				module.exports.subscribe('StateCurrent', (value) => {
 					const currentValue = value.value
 					if (currentValue !== currentState) {
 						console.log('State changed to', currentValue)
 						currentState = currentValue
+					}
+				})
+			}
+
+			if (!stopReasonSubscription) {
+				module.exports.subscribe('StopReason', (value) => {
+					const currentValue = value.value
+					if (currentValue !== currentState) {
+						currentState = currentValue
+						this.maintenence()
 					}
 				})
 			}
@@ -311,7 +322,7 @@ module.exports = {
 
 		console.log('Subscribing to node', variable.path)
 
-		subscription = ClientSubscription.create(session, {
+		stateSubscription = ClientSubscription.create(session, {
 			requestedPublishingInterval: 1000,
 			requestedMaxKeepAliveCount: 20,
 			requestedLifetimeCount: 6000,
@@ -320,7 +331,7 @@ module.exports = {
 			priority: 10,
 		})
 
-		subscription.monitor(
+		stateSubscription.monitor(
 			{
 				nodeId: variable.path,
 				attributeId: AttributeIds.Value,
@@ -334,7 +345,7 @@ module.exports = {
 			MonitoringMode.Reporting
 		)
 
-		subscription.on('received_notifications', (notifications) => {
+		stateSubscription.on('received_notifications', (notifications) => {
 			console.log(
 				'Received notifications',
 				variable.name,
