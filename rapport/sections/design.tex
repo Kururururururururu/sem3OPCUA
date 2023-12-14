@@ -17,13 +17,13 @@ The Web Service will consist of the front-end, back-end, and the OPC Client. The
 The communication between the front-end, the back-end and the beer machine is implemented using a RESTful API. \newline
 This deployment model ensures a clear separation of concerns, enabling efficient scaling in the future, while easing the maintenance of individual components.
 
-\subsubsection{Frontend}
+\subsection{Frontend}
 The user interface (UI) of the beer production system is developed using React, a powerful and easy-to-use JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces, which perfectly aligned with our goal of creating a user-friendly and responsive frontend for the beer production application.
 In addition, Reacts offers a modular development environment in form of it's component-based design structure, this allows for the development of reusable UI elements, that can be combined to effortlessly form complex user interfaces. This helped the project to meet requirement U-01, to develop a user-friendly design, as each component can be developed and tested individually, before it's combined to form the final UI. \newline
 The library also offers a virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM, this allows for efficient rendering of the UI, as the virtual DOM only updates the necessary components, instead of re-rendering the whole UI every time a change is made. This helped the project to meet requirement U-02, to develop a responsive design, as the virtual DOM allows for efficient rendering of the UI, which in turn allows for a more responsive UI. \newline
 Lastly it offered us a lot of flexibility in terms of state management, which is a crucial aspect of the project, as the UI needs to be able to handle a lot of different states, such as the different stages of the beer production process, and the different states of the beer machine. This helped the project to meet requirement U-03, to develop a dynamic design, as the UI can be updated to reflect the current state of the beer machine and it's progress. \newline
 All these features, combined with the fact that it is a very popular and well-documented library, made it the perfect choice for the development of the user interface of the beer production system.
-\subsubsubsection{User Interface}
+\subsubsection{User Interface}
 To ensure we met requirement U-01, to develop a user-friendly design, we decided to develop a clean and simple user interface, without all the unnecessary information, to make it as easy as possible for the user to navigate and use the application. \newline
 Therefore, an early draft of the user interface was developed to get a clear idea of the overall design and layout of the application. \newline
 \begin{center}
@@ -34,43 +34,26 @@ Therefore, an early draft of the user interface was developed to get a clear ide
       \label{fig:Frontend_draft}
   \end{figure}
 \end{center}
+With attention to the user experience, the user interface was designed to be intuitive and easy to use, with a clear and simple layout, and a minimalistic design. \newline
+At the top of the page, the user is presented with 2 tabs: the \textit{Brew} tab and the \textit{Analytic} tab.  \newline
+The \textit{Brew} tab is the default tab, and this is where the user can initiate the beer production process. \newline
+The user is at the top presented with a column of the available beer types, and the user can select the desired beer type by clicking on the corresponding button. \newline
+Below the beer type buttons a progress bar is displayed, this progress bar will be updated to reflect the current stage of the beer production process. \newline
+At the bottom of the page, the column is divided into 2 sections: the left section contains \textit{Control buttons} to either start or stop the production, and the right side contains the \textit{Silo fill level} which visually indicates the current level of material stored in the silo. \newline
+To brew a beer, the user simply selects the desired beer type, followed by pressing the big green \textit{Start} button at the bottom left.
 
-\subsubsection{Backend}
+\subsection{Backend}
 The backend component of the beer production system will be implemented using Node.js, a versatile JavaScript runtime known for its efficiency in building scalable and high-performance server-side applications. Leveraging the strengths of Node.js, we aim to create a secure and reliable back-end that seamlessly communicates with the front end and the PLC-controlled beer production machine.
+Node was chosen over Milo, for various reasons. Firstly, Node is a more well-documented framework it runs on the newest version of Java, which makes it easier to find solutions to problems and to get help when needed. Secondly, Node is a more versatile framework, which allows for more flexibility in terms of development. Lastly, Node is a more popular framework, which means that it has a larger community, which in turn means that it is more likely to be supported in the future. \newline
+This design choice also enabled us to easily implement and use the OPCUA library, as it allows us to easily implement a secure communication with the beer machine by automatically generating the certificate needed for communication. \newline
 
-Node.js for Asynchronous Operations
-Node.js excels in handling asynchronous operations, making it well-suited for scenarios where real-time communication and responsiveness are crucial. This feature aligns perfectly with the requirements of our beer production system, allowing for efficient communication between the user interface and the hardware components.
-
-RESTful API Development
-The back end will expose a RESTful API (Application Programming Interface) to facilitate communication between the front end and the PLC-controlled beer production machine. This API will define endpoints for actions such as initiating the brewing process, retrieving data, and handling alerts or notifications. Node.js, with its lightweight and fast I/O operations, is ideal for developing RESTful APIs.
-
-Secure Communication
-Security is paramount in the back-end design. Node.js offers robust libraries and modules for implementing secure communication protocols, such as HTTPS. This ensures that data exchanged between the front end and the beer production machine is encrypted, minimizing the risk of unauthorized access.
-
-Data Storage with NoSQL Database
-For efficient data storage and retrieval, a NoSQL database, such as MongoDB, will be employed. Node.js seamlessly integrates with NoSQL databases, offering a flexible and scalable solution for storing data related to beer recipes, production logs, and system configurations.
-
-WebSocket for Real-Time Communication
-To enable real-time communication and push notifications to the front end, WebSocket technology will be implemented using Node.js. This bidirectional communication channel ensures that users receive immediate updates on the brewing process, alerts, or any other relevant information.
-
-Containerization for Scalability
-In line with the project's emphasis on scalability, containerization technologies like Docker and Kubernetes will be utilized. Node.js applications can be efficiently containerized, providing a scalable and easily deployable solution. This approach ensures that the back-end infrastructure can adapt to increased load or additional features in the future.
-
-Logging and Monitoring
-Node.js provides robust logging mechanisms, allowing for the systematic recording of events and errors. Monitoring tools will be integrated to track the performance and health of the back-end system. This ensures that any issues can be promptly identified and addressed.
-
-Testing and Continuous Integration
-The Node.js back end will undergo thorough testing to validate its functionality, security, and scalability. Continuous Integration (CI) practices will be implemented to automate the testing process, ensuring that each code change is rigorously assessed for quality and reliability.
-
-In summary, the use of Node.js for back-end development brings scalability, real-time communication, and security to the beer production system. By leveraging the strengths of Node.js, we aim to create a robust foundation that seamlessly integrates with the front end and effectively communicates with the PLC-controlled beer production machine.
-
-\subsubsection{communication}
+\subsection{communication}
 The communication between the front-end and the back-end is implemented using a RESTful API. 
 
 \subsection{Simulation}
-Incorporating the provided ARsim simulation tool early on into our development process was a crucial aspect of this project. 
-The early integration allowed us to speed up the development time from the very beginning of the project, as most of our program's functionalities could be tested directly without the need for direct access to the physical machine.
-As the tool allowed us to interact with ARsim in a manner similar to how our software would communicate with the actual hardware, it also enabled multiple people to test multiple different things without interfering with one another.
+Incorporating the provided ARsim simulation tool early on into our development process was a crucial aspect of this project in terms of testing. 
+The early integration allowed us to speed up the development time from the very beginning, as most of our program's functionalities could be tested directly without the need for direct access to the physical machine.
+The tool allowed us to interact with ARsim in a manner similar to how our software would communicate with the actual machine, but it also enabled multiple people to test multiple different things without interfering with one another.
 % ARsim serves as a valuable resource that enables simulation of the beer production process without the need for direct access to the physical machine. 
 %This simulation tool will be instrumental in testing and refining our software application.
 
