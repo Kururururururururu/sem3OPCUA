@@ -69,3 +69,10 @@ The tool allows us to interact with ARsim in a manner similar to how our softwar
 \subsubsection{ARsim Integration}
 The early ARsim simulation tool integration into the development process, to mimic the behavior of the beer machine will allow us to speed up the development time from the very start of the project, as most of our program's functionalities could be tested thoroughly without the need of the physical beer machine.
 This integration will also allow us to interact with ARsim in a manner similar to how our software would communicate with the actual hardware, and enabled multiple people to test multiple different things without interfering with one another. 
+
+\subsection{Summary}
+We chose to design our project using the client-server model, as it allows for a clear separation of concerns and enables us to have a more efficient development process, as each component can be developed and tested individually. \newline
+This architecture separates the system into three deployments: The web service, the database service, and the physical beer machine. \newline
+The web service consists of the frontend, the backend and the OPC Client. The frontend is developed using React, and the backend is developed using Node to meet our requirements. The use of JavaScript for both the frontend and the backend, allows for a more efficient development process, as the same language can be used for both components. \newline
+The communication between the frontend, the backend and the beer machine is implemented using a RESTful API, where every endpoint has a specific responsibilit to ensure a clear separation of concerns. \newline
+Lastly, the ARsim simulation tool should be integrated early into the development process to mimic the behavior of the beer machine and allow for a more efficient development process. 
