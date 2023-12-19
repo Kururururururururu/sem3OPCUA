@@ -2,10 +2,12 @@
 
 \subsection{Results}
 \subsubsection{Achievements}
-We managed to create a very thorough backend part for our application,
-with all the functionality for automating the beer brewing process.
-The frontend we've created is simple, but is able to communicate with the backend,
-and allows the user to start the brewing process, and monitor the current inventory.
+We have managed to create a very robust backend, which needs very little input from the user, and handle the entire brewing process, 
+and automatically going into maintenance and refilling mode when required.
+The backend has all the required implementations to scale up production to handle more than a single beer at a time.
+We have connected our backend to the frontend, which enables the user to start the brewing process through the frontend, 
+with a single click, and letting them see realtime update of the current inventory.
+Whenever a beer is made, the connected database is also updated, storing which type of beer was produced, and when, which can later be used in analytics.
 
 \subsubsection{Limitations}
 \subsubsubsection{Machine Speed Limitations}
