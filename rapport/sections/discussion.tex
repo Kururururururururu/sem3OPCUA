@@ -2,10 +2,12 @@
 
 \subsection{Results}
 \subsubsection{Achievements}
-We managed to create a very thorough backend part for our application,
-with all the functionality for automating the beer brewing process.
-The frontend we've created is simple, but is able to communicate with the backend,
-and allows the user to start the brewing process, and monitor the current inventory.
+We have managed to create a very robust backend, which needs very little input from the user, and handle the entire brewing process, 
+and automatically going into maintenance and refilling mode when required.
+The backend has all the required implementations to scale up production to handle more than a single beer at a time.
+We have connected our backend to the frontend, which enables the user to start the brewing process through the frontend, 
+with a single click, and letting them see realtime update of the current inventory.
+Whenever a beer is made, the connected database is also updated, storing which type of beer was produced, and when, which can later be used in analytics.
 
 \subsubsection{Limitations}
 \subsubsubsection{Machine Speed Limitations}
@@ -35,6 +37,11 @@ Whenever a task in the sprint was completed, the code would be pushed to our git
 to make sure we all had a log of what was done, and had access to the code.
 
 \subsection{Future Improvements}
-\subsubsection{Frontend}
-The frontend is not fully functional, as the only two features currently implemted, are the brewing process, and the inventory.
-We could still have the stop/start buttons implemented, and the ability to brew more than a single beer at a time.
+We could have spent more time working on the frontend, as it is now a lot of functionality, 
+and hooking up to the backend is missing. While all the buttons are visually there,
+few of them have actual functionality when clicked. \newline
+Currently only the brew buttons work, and only for brewing a single beer at a time.
+The start/stop buttons do nothing, and the analytics page does not get any data from the database.
+\newline
+So for the future development these buttons should be hooked up to their respective functionalities in the backend,
+and options for brewing multiple beers at a time could be added.
