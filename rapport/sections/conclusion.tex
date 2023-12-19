@@ -14,14 +14,16 @@ We also made a database for storing the order with the beer type, the amount of 
 The implementation of the system was made with the design in mind.
 In the web application we decided to use a single page application (SPA) with the UI library React,
 since is makes it easier to update the UI without having to reload the page.
-The REST API was made with the framework Express and the OPC-UA client was made with the library node-opcua, both of which are packages for Node.js.
-The database was made with the database management system (DBMS) PostgreSQL, using library pg for Node.js.\newline
+We decided to go for a backend with Node.js instead of Java, because it is easier to use and faster to develop with than Java.
+The Milo OPC-UA library in Java is also using Java 8, which is a very old version.
+The REST API was made with the framework Express and the OPC-UA client was made with the library node-opcua.
+The database was made with the database management system (DBMS) PostgreSQL, using the pg library.\newline
 
-To make sure our system worked as we intended, we made tests for the implementation of the system.
+To make sure our system worked as we intended, we tested the system.
 We made unit tests for the Express REST API backend and for the OPC-UA client.
-One of our requirements was to aim for optimal speed for each beer type.
-To do this we tested each of the beer types with different speeds and observed the fail rate.
+We also tested each of the beer types with different speeds and observed the fail rate,
+as one of our requirements was to aim for optimal speed for each beer type.
 From the data gathered, graphs were made for each beer type together with a regression line.
-Based on that regression lined we solved for having a failrate of 0.99, which means that the machine will fail 1\% of the time.
+Based on that regression line we solved for having a failrate of 1\%.
 From the solution, the optimal speeds for each beer type was 263, 5, 58, 238, -10 and -198 for Pilsner, Wheat, IPA, Stout, Ale and Alcohol Free respectively.
 As negative speeds aren't possible we decided to use 1 as the speed for Ale and Alcohol Free.\newline
