@@ -33,7 +33,7 @@ Figure \ref{fig:Deployment_diagram} shows the deployment diagram of the system. 
 
 By deploying the system this way, we can ensure that the system is scalable and maintable in the future. By encapsling the webservice into a container, we can make changes, updates and etc, which helps us reducing the risk of conflics with other parts of the system. \newline
 
-\subsubsubsection{Sequence diagram}
+\subsubsubsection{Sequence Diagram}
 
 Now that we have declared how the system is being deployed, it is important to understand the realations/communication between the different applications. In the following sequence diagram, we can see the interaction between the application.
 
@@ -50,7 +50,7 @@ Figure \ref{fig:SQdiagram_implementation} shows the sequence diagram of the syst
 When the brewing is done, the data for the given batch production will be sent to the database, with data about the succes of the brewing, failures and so on. This data can be handled if needed to help optimize the brewing process. The client does not get this message it work internally in our automated system. The service will sent a message to the backend saying the beer is done, here the backend sent a request to the frontend where the user get displayed the beer type and amount brewed is a success.
 Overall this is a simple representation of the sytems workflow, but it helps indicate the progress from selecting a beer to actually getting the product.
 
-\subsubsubsection{Class diagram}
+\subsubsubsection{Class Diagram}
 
 \begin{center}
     \centering
