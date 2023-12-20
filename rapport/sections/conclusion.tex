@@ -1,8 +1,8 @@
 \section{Conclusion}
 Based on the analysis we came to the conclusion that our target group is hobbyists or home brewers.
-We have also concluded that the most important features for our target group is the ability to simplify the brewing process for the users and
-to make it easier and less time consuming, since the brewing process is very complex and time consuming
-and we don't expect our users to have any prior experience or expertise in brewing.\newline
+We have also concluded that the most important features for our target group is the ability to simplify the brewing process and
+make it easier and less time consuming, this is necessary since brewing process is very complex and time consuming
+as we do not expect our users to have any prior experience or expertise in brewing.\newline
 
 With the help of the analysis, requirements for the project was made.
 Based on these requirements we made a design for the system.
@@ -13,9 +13,9 @@ We also made a database for storing the order with the beer type, the amount of 
 
 The implementation of the system was made with the design in mind.
 In the web application we decided to use a single page application (SPA) with the UI library React,
-since is makes it easier to update the UI without having to reload the page.
+since it makes it easier to update the UI without having to reload the page.
 We decided to go for a backend with Node.js instead of Java, because it is easier to use and faster to develop with than Java.
-The Milo OPC-UA library in Java is also using Java 8, which is a very old version.
+The Milo OPC-UA library in Java is running on Java 8, which is a very old version.
 The REST API was made with the framework Express and the OPC-UA client was made with the library node-opcua.
 The database was made with the database management system (DBMS) PostgreSQL, using the pg library.\newline
 
@@ -26,4 +26,4 @@ as one of our requirements was to aim for optimal speed for each beer type.
 From the data gathered, graphs were made for each beer type together with a regression line.
 Based on that regression line we solved for having a failrate of 1\%.
 From the solution, the optimal speeds for each beer type was 263, 5, 58, 238, -10 and -198 for Pilsner, Wheat, IPA, Stout, Ale and Alcohol Free respectively.
-As negative speeds aren't possible we decided to use 1 as the speed for Ale and Alcohol Free.\newline
+As negative speeds are not possible we decided to use 1 as the speed for Ale and Alcohol Free.\newline
