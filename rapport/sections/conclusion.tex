@@ -25,5 +25,8 @@ We also tested each of the beer types with different speeds and observed the fai
 as one of our requirements was to aim for optimal speed for each beer type.
 From the data gathered, graphs were made for each beer type together with a regression line.
 Based on that regression line we solved for having a failrate of 1\%.
-From the solution, the optimal speeds for each beer type was 263, 5, 58, 238, -10 and -198 for Pilsner, Wheat, IPA, Stout, Ale and Alcohol Free respectively.
 As negative speeds are not possible we decided to use 1 as the speed for Ale and Alcohol Free.\newline
+
+Overall, we have made a simplified and automated system for hobbyists and home brewers,
+that has been tested and optimized. The system uses the client-server architecture with a Node.js REST API backend,
+using an OPC-UA client, which is connected to the OPC-UA server, and React frontend together with storing the orders in a PostgreSQL database.

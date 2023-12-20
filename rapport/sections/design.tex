@@ -19,7 +19,7 @@ This deployment model should ensure a clear separation of concerns, allowing eff
 \subsection{Frontend}
 The user interface (UI) of the beer production system is developed using React, a powerful and easy-to-use JavaScript library with a lot of flexibility and efficiency in building interactive and dynamic user interfaces. This aligned perfectly with our goal of creating a user-friendly and responsive frontend for the beer production application.
 In addition, React offers a modular development environment in form of it's component-based design structure. This allows for the development of reusable UI elements, that can be combined to effortlessly form complex user interfaces. This helped the project to meet requirement U-01, to develop a user-friendly design, as each component can be developed and tested individually before it's combined to form the final UI. \newline
-The library also offers a virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM, this allows for efficient rendering of the UI, as the virtual DOM only updates the necessary components, instead of re-rendering the whole UI every time a change is made. This helped the project to meet requirement U-02, to develop a responsive design, as the virtual DOM allows for efficient rendering of the UI, which in turn allows for a more responsive UI. \newline
+The library also offers a virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM. This allows for efficient rendering of the UI, as the virtual DOM only updates the necessary components, instead of re-rendering the whole UI every time a change is made. This helped the project to meet requirement U-02, to develop a responsive design, as the virtual DOM allows for efficient rendering of the UI, which in turn allows for a more responsive UI. \newline
 Lastly, it offered us a lot of flexibility in terms of state management, as the UI needs to be able to handle a lot of different states. This includes the different stages of the beer production process, but also the different states of the beer machine itself. This helped the project to meet requirement U-03, to develop a dynamic design, as the UI can be updated to reflect the current state of the beer machine and it's progress. \newline
 All these features, combined with the fact that it is a very popular and well-documented library, made it the perfect choice for the development of the user interface of the beer production system.
 \subsubsection{User Interface}
@@ -33,31 +33,34 @@ Therefore, an early draft of the user interface was drawn by hand to get a clear
       \label{fig:Frontend_draft}
   \end{figure}
 \end{center}
+
 With attention to the user experience, the UI was designed to be intuitive and easy to use, with a clear and simple layout and a minimalistic design. At the top of the page, the user should presented with 2 tabs: the \textit{Brew} tab and the \textit{Analytic} tab.  \newline
 The \textit{Brew} tab is the default tab, and this is where the user can initiate the beer production process. The user is at the top presented with a column of the available beer types, and the user can select the desired beer type by clicking on the corresponding button. \newline
 Below the beer type buttons a progress bar is displayed, this progress bar will be updated to reflect the current stage of the beer production process. At the bottom of the page, the column is divided into 2 sections: the left section contains \textit{Control buttons} to either start or stop the production, and the right side contains the \textit{Silo fill level} which visually indicates the current level of material stored in the silo. \newline
+
 To brew a beer, the user simply selects the desired beer type, followed by pressing the big green \textit{Start} button at the bottom left.
-The \textit{Analytic} tab is where the user should be view the data collected from the beer production process in a simple column-based view. Such as: "Beers", "Most Brewed Beer Type", "Last Brewed Beer", and "Last Brewing Time". \newline
+The \textit{Analytic} tab is where the user should view the data collected from the beer production process in a simple column-based view. Such as: "Beers", "Most Brewed Beer Type", "Last Brewed Beer", and "Last Brewing Time". \newline
 
 \subsection{Backend}
 The backend component of the beer production system should be implemented using Node.js, a versatile JavaScript runtime known for its efficiency in building scalable and high-performance server-side applications. By using the strengths of Node.js, we aim to create a secure and reliable back-end that seamlessly communicates with the front end and the PLC-controlled beer production machine.
-Node was chosen over Milo, for various reasons. Some of the thoughts behind the reasoning include:
+Node was chosen over Milo for various reasons. Some of the thoughts behind the reasoning include:
 \begin{itemize}
   \item Node is a more popular framework, which means it has a larger community, and is more well-documented, which makes it easier to find solutions to problems.  
   \item The framework is more versatile compared to Milo, which allows for more flexibility in terms of both development and time spent developing. 
   \item Lastly, it runs on the newest version of JavaScript, which means that it is more likely to be supported in the future and is less likely to be affected by potential flaws from the previous versions of Java. \newline
 \end{itemize}
-This choice of using Node also enabled us to implement and use the OPC-UA library, which allowed us to easily implement a secure communication with the beer machine by automatically generating the certificate needed for the communication between the systems.
+This choice of using Node also enable us to implement and use the OPC-UA library, which allowed us to easily implement a secure communication with the beer machine by automatically generating the certificate needed for the communication between the systems.
 
 \subsubsection{Communication}
-The backend should be responsible for handling routing and requests for communication within the system, aswell as the dataprocessing to fully automate different processes such as brewing and maintenance. This should be implemented using a RESTful API, in form of different endpoints with different responsibles. \newline 
+The backend should be responsible for handling routing and requests for communication within the system, as well as the data processing to fully automate different processes such as brewing and maintenance. This should be implemented using a RESTful API, in form of different endpoints with different responsibilities. \newline 
 The backend should be able to \textit{GET} the state of the beer machine, and its inventory. This is needed to handle the beer procressing and the maintenance process within the backend.\newline
 Furthermore, the backend should be able to \textit{POST} a beer order to the beer machine into production. This is needed to handle the beer production process.\newline
 Lastly, the backend should be able to \textit{READ} the data collected from the beer production process and \textit{CREATE} the data to the database using \textit{CRUD}. This is needed to handle the data processing and logging of the beer production process.
 The design choice of using a RESTful API for internal communication within the Web-Service, and its communication with the Beer Machine, allows for a clear separation of concerns, as each endpoint is responsible for a specific task, which in turn allows for a more efficient development process, as each endpoint and its logic can be developed and tested individually.
 
 \subsection{Simulation}
-The provided ARsim simulation tool should be integrated early on into our development process should be at high priority for our project to reduce development time in terms of testing. 
+The provided ARsim simulation tool should be integrated early on into our development process should be a high priority for our project to reduce development time in terms of testing. 
+
 The early integration should allow us to speed up the development time from the very beginning, as most of our program's functionalities can be thoroughly tested directly without the need for direct access to the physical machine.
 As the tool will mimic the behavior of the beermachine, it should allow us to interact with ARsim in a manner similar to how our software would communicate with the actual machine, and also enable concurrent tests of multiple different things without interfering with one another.
 
