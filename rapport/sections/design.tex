@@ -5,9 +5,9 @@
 % provide key recommendations.
 \section{Design}
 The project aims to develop a solution to automate and, thereby, ease the beer production process for the hobbyists. Our design solution is strictly developed based on the previously mentioned personas and requirements.\newline
-The process of beer production can be a rather complex and very manual process. The user would have to manually control the temperature, add the correct ingredients and the right amount at the right time, while continuously monitoring the whole process to ensure that everything is going according to plan.\newline
-The user might want to produce multiple amounts, but also different kinds of beer. This would require the user to look up each recipe every time to do the same recipe calculations based on the desired amount and beer type with every new batch, while monitoring and possibly adjusting the temperatures of the ingredients throughout the whole process.\newline
-This process can quickly become overwhelming and tedious, especially for newcomers. Thus, it might lead to human errors as the production expands and in thr worst case end up taking the joy out of the hobby.\newline
+The process of beer production can be rather complex and very manual. The user would have to manually control the temperature, add the correct ingredients and the right amount at the right time, while continuously monitoring the whole process to ensure that everything is going according to plan.\newline
+The user might want to produce different amounts, but also different kinds of beer. This would require the user to look up each recipe every time to do the same recipe calculations based on the desired amount and beer type with every new batch, while monitoring and possibly adjusting the temperatures of the ingredients throughout the whole process.\newline
+This process can quickly become overwhelming and tedious, especially for newcomers. It might lead to human errors as the production expands and in thr worst case end up taking the joy out of the hobby.\newline
 Our design goal is to make brewing easy and accessible to everyone, even for the least technical of people. We want to solve this issue by having a simple and clean user interface, without all the unnecessary information, where all the heavy calculations, continuous monitoring, and processing are done by software behind the scenes.\newline
 
 \subsection{System Architecture}
@@ -33,12 +33,9 @@ Therefore, an early draft of the user interface was drawn by hand to get a clear
       \label{fig:Frontend_draft}
   \end{figure}
 \end{center}
-With attention to the user experience, the UI was designed to be intuitive and easy to use, with a clear and simple layout and a minimalistic design. \newline
-At the top of the page, the user should presented with 2 tabs: the \textit{Brew} tab and the \textit{Analytic} tab.  \newline
-The \textit{Brew} tab is the default tab, and this is where the user can initiate the beer production process. \newline
-The user is at the top presented with a column of the available beer types, and the user can select the desired beer type by clicking on the corresponding button. \newline
-Below the beer type buttons a progress bar is displayed, this progress bar will be updated to reflect the current stage of the beer production process. \newline
-At the bottom of the page, the column is divided into 2 sections: the left section contains \textit{Control buttons} to either start or stop the production, and the right side contains the \textit{Silo fill level} which visually indicates the current level of material stored in the silo. \newline
+With attention to the user experience, the UI was designed to be intuitive and easy to use, with a clear and simple layout and a minimalistic design. At the top of the page, the user should presented with 2 tabs: the \textit{Brew} tab and the \textit{Analytic} tab.  \newline
+The \textit{Brew} tab is the default tab, and this is where the user can initiate the beer production process. The user is at the top presented with a column of the available beer types, and the user can select the desired beer type by clicking on the corresponding button. \newline
+Below the beer type buttons a progress bar is displayed, this progress bar will be updated to reflect the current stage of the beer production process. At the bottom of the page, the column is divided into 2 sections: the left section contains \textit{Control buttons} to either start or stop the production, and the right side contains the \textit{Silo fill level} which visually indicates the current level of material stored in the silo. \newline
 To brew a beer, the user simply selects the desired beer type, followed by pressing the big green \textit{Start} button at the bottom left.
 The \textit{Analytic} tab is where the user should be view the data collected from the beer production process in a simple column-based view. Such as: "Beers", "Most Brewed Beer Type", "Last Brewed Beer", and "Last Brewing Time". \newline
 
