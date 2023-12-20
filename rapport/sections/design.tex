@@ -49,7 +49,7 @@ Node was chosen over Milo, for various reasons. Some of the thoughts behind the 
 \begin{itemize}
   \item Node is a more popular framework, which means it has a larger community, and is more well-documented, which makes it easier to find solutions to problems.  
   \item The framework is more versatile compared to Milo, which allows for more flexibility in terms of both development and time spent developing. 
-  \item Lastly, it runs on the newest version of Java, which means that it is more likely to be supported in the future and is less likely to be affected by potential flaws from the previous versions of Java. \newline
+  \item Lastly, it runs on the newest version of JavaScript, which means that it is more likely to be supported in the future and is less likely to be affected by potential flaws from the previous versions of Java. \newline
 \end{itemize}
 This choice of using Node also enabled us to implement and use the OPC-UA library, which allowed us to easily implement a secure communication with the beer machine by automatically generating the certificate needed for the communication between the systems.
 
@@ -57,18 +57,13 @@ This choice of using Node also enabled us to implement and use the OPC-UA librar
 The backend should be responsible for handling routing and requests for communication within the system, aswell as the dataprocessing to fully automate different processes such as brewing and maintenance. This should be implemented using a RESTful API, in form of different endpoints with different responsibles. \newline 
 The backend should be able to \textit{GET} the state of the beer machine, and its inventory. This is needed to handle the beer procressing and the maintenance process within the backend.\newline
 Furthermore, the backend should be able to \textit{POST} a beer order to the beer machine into production. This is needed to handle the beer production process.\newline
-Lastly, the backend should be able to \textit{GET} the data collected from the beer production process and \textit{POST} the data to the database. This is needed to handle the data processing and logging of the beer production process.
-The design choice of using a RESTful API, allows for a clear separation of concerns, as each endpoint is responsible for a specific task, which in turn allows for a more efficient development process, as each endpoint and its logic can be developed and tested individually.
+Lastly, the backend should be able to \textit{READ} the data collected from the beer production process and \textit{CREATE} the data to the database using \textit{CRUD}. This is needed to handle the data processing and logging of the beer production process.
+The design choice of using a RESTful API for internal communication within the Web-Service, and its communication with the BeerMachine, allows for a clear separation of concerns, as each endpoint is responsible for a specific task, which in turn allows for a more efficient development process, as each endpoint and its logic can be developed and tested individually.
 
 \subsection{Simulation}
-Incorporating the provided ARsim simulation tool early on into our development process should be at high priority for this project to reduce development time in terms of testing. 
-The early integration will allow us to speed up the development time from the very beginning, as most of our program's functionalities then can be tested directly without the need for direct access to the physical machine.
-The tool allows us to interact with ARsim in a manner similar to how our software would communicate with the actual machine, and also enable concurrent tests of multiple different things without interfering with one another.
-
-
-\subsubsection{ARsim Integration}
-The early ARsim simulation tool integration into the development process, to mimic the behavior of the beer machine will allow us to speed up the development time from the very start of the project, as most of our program's functionalities could be tested thoroughly without the need of the physical beer machine.
-This integration will also allow us to interact with ARsim in a manner similar to how our software would communicate with the actual hardware, and enabled multiple people to test multiple different things without interfering with one another. 
+The provided ARsim simulation tool early on into our development process should be at high priority for our project to reduce development time in terms of testing. 
+The early integration should allow us to speed up the development time from the very beginning, as most of our program's functionalities can be thoroughly tested directly without the need for direct access to the physical machine.
+As the tool will mimic the behavior of the beermachine, it should allow us to interact with ARsim in a manner similar to how our software would communicate with the actual machine, and also enable concurrent tests of multiple different things without interfering with one another.
 
 \subsection{Summary}
 We chose to design our project using the client-server model, as it allows for a clear separation of concerns and enables us to have a more efficient development process, as each component can be developed and tested individually. \newline
