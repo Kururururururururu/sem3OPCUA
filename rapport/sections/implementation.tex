@@ -8,7 +8,7 @@ While also seeing what did not get done in the current sprint. If a feature was 
 
 \subsubsection{Technologies}
 To help us develop the system, we decided to use some different software technologies that includes Docker, Node.js, React, OPC-UA. All the listed things helped us develop the system the way we wanted it.
-Docker is a containerization feature that allows us to run several applications in a single container. We decided to use Docker to run the OPC-UA client, frontend and backend. 
+Docker is a containerization feature that allows us to run several applications in a single container. We decided to use Docker to run the OPC-UA client, frontend and backend.
 With the use of the containerization options included in Docker environment, we could run all the different applications, Frontend, Backend and OPC-UA client in a single file. \newline
 The backend is developed in Node.js, which is a JavaScript runtime, with the Express package. The reason that we decided to use Node.js was because the frontend is developed in React, which also is a JavaScript package. This helped us to get a secure and easy connection between the frontend and the backned without too much effort. The OPC-UA client is developed in JavaScript, with a package called Node-Opcua. This is an open source package that allows connection and communication with an OPC-UA server.\newline
 The reason we went with Node-Opcua instead of the provided MILO package in Java 8, was because, we already decided that we wanted to build in backend and frontend in JavaScript, and by using Node-Opcua we could use the same language for the OPC-UA client. This allowed us to establish a secure connection without failures, and it also allows us a better integrity of the system. \newline
@@ -68,7 +68,6 @@ The index.js file is responsible for our backend, which handles routing and requ
 \begin{enumerate}
     \item {POST ('/api/pass-to-queue')}
     \item {GET ('/api/state')}
-    \item {GET ('/api/batch')}
     \item {GET ('/api/inventory')}
 \end{enumerate}
 
@@ -76,7 +75,7 @@ Our only \textit{POST} endpoint, which is the first on the list, is responsible 
 While running the brewing method, it will continously update the state, as we have subscribed to the Node, that holds the stateCurrent value. If it isn't in \textit{execute}, which is the state that it is in, when it is brewing, it will brew. Otherwise if it is brewing (in execute state or 6 of value), then it will send an error to the user and not run that brewing order.
 This way it can never brew if it is already brewing. \newline
 
-Our 3 \textit{GET} endpoints is just for the client to receive data. Which is the state, batchId and inventory, respectively.
+Our 3 \textit{GET} endpoints is just for the client to receive data. Which is the state and inventory, respectively.
 All of these \textit{GET} endpoints are server-sent events (SSE). This means that the user will get the information streamed down continously. \newline
 
 Our most essential API endpoint is our POST request, as it is the one to make a brewing order. Here is some of our code to show what is happening, when a user makes an order;
@@ -164,6 +163,6 @@ Figure \ref{fig:pass_to_queue_api} shows the code for our \textit{POST} endpoint
 \end{center}
 Figure \ref{fig:opc_client_brew} shows the code for our beer brewing method. Initially, it validates essential parameters—beer type, amount, and machine speed—returning false if any are undefined or set to zero. Furthermore, it confirms the beer type's existence in the products object and checks if the machine speed falls within the acceptable range for that type. \newline
 
-After these checks, it ensures the system is in the 'execute' state for brewing. If not, it triggers the PackMLStateHandler method. It also handles maintenance if the stop reason is 10 or 11, iterating through nodesToWrite to update data and managing the batch ID.\newline
+After these checks, it ensures the system is in the 'execute' state for brewing. If not, it triggers the PackMLStateHandler method. It also handles maintenance if the stop reason is 10 or 11, iterating through nodesToWrite to update data.\newline
 
 Upon successful execution, it returns true. Any encountered errors prompt a false return.\newline
