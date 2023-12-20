@@ -9,29 +9,6 @@ const DIST_DIR = process.env.DIST_DIR || '../frontend/dist'
 app.use(express.static(path.resolve(process.cwd(), DIST_DIR)))
 app.use(express.json())
 
-// make SSE connection to client for the batch id
-app.get('/api/batch', async (req, res) => {
-	res.setHeader('Cache-Control', 'no-cache')
-	res.setHeader('Content-Type', 'text/event-stream')
-	res.setHeader('Access-Control-Allow-Origin', '*')
-	res.setHeader('Connection', 'keep-alive')
-	res.flushHeaders() // flush the headers to establish SSE with client
-
-	const opcua = opcuaClient
-	await opcua.connect()
-
-	const interval = setInterval(async () => {
-		const batch = opcua.getBatchId()
-		const chunk = JSON.stringify({ batch })
-		res.write(`data: ${chunk}\n\n`)
-	}, 1000)
-
-	res.on('close', () => {
-		clearInterval(interval)
-		res.end()
-	})
-})
-
 app.get('/api/inventory', async (req, res) => {
 	res.setHeader('Cache-Control', 'no-cache')
 	res.setHeader('Content-Type', 'text/event-stream')

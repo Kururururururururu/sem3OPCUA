@@ -235,12 +235,15 @@ module.exports = {
 				return false
 			}
 
+			/*
 			const maxMachineSpeedForBeerType = speedLimits[beer_type]
 
 			if (machine_speed < 0 || machine_speed > maxMachineSpeedForBeerType) {
 				console.error(`Invalid machine speed for ${beer_type}. It should be between 0 and ${speedLimits[beer_type]}.`)
 				return false
 			}
+			*/
+			machine_speed = speedLimits[beer_type];
 
 			const nodesToWrite = [
 				{
