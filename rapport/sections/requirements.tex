@@ -1,39 +1,47 @@
 
 \section{Requirements}
 
+<<<<<<< Updated upstream
 Functional and non-functional\cite{example} requirements are listed in the table below. The requirements are based on the FURPS+ model, which is a model for classifying software quality attributes. The model is used to classify the requirements into different categories. The categories are functionality, usability, reliability, performance and supportability.
 To give a better overview how the different non-functional requirements have been divided we have seperated each category of the FURPS+ model into different letters. Under the ID table R stands for reliability, U stands for usability, S stands for Scalability, P Stands for performance, and lastly the + for the specific constraints, which contains Design constraints, Implementation constraints, Interface constraints and Physical constraints. \newline
+=======
+Functional and non-functional\cite{example} requirements are listed in the table below. The requirements are based on the FURPS+ model, which is a model for classifying software quality attributes. The model is used to classify the requirements into different categories. The categories are functionality, usability, reliability, performance, and supportability.
+To give a better overview of how the different non-functional requirements have been divided we have seperated each category of the FURPS+ model into different letters. Under the ID table, R stands for reliability, U stands for usability, S stands for scalability, P stands for performance, and lastly the + stands for the specific constraints consisting of Design constraints, Implementation constraints, Interface constraints, and Physical constraints. \newline
+>>>>>>> Stashed changes
 
-The requirements are also classified into the MOSCOW model, which is a model for prioritizing requirements. The categories are must have, should have, could have and won't have. The requirements are listed in the table below. \newline
+The requirements are also classified into the MOSCOW model, which is a model for prioritizing requirements. The categories are must have, should have, could have, and won't have. The requirements are listed in the table below. \newline
 
-In the table below we have seperated each functional and non-functional requirements into the different categories in MOSCOW. M stands for must have, S stands for should have, C stands for could have and W stands for won't have.\newline
+In the table below we have seperated each functional and non-functional requirement into the different categories in MOSCOW. M stands for must have, S stands for should have, C stands for could have and W stands for won't have.\newline
 
-\subsection{Requirements using FURPS}
+\subsection{Requirements using FURPS+}
 \begin{center}
     \sloppy
     \begin{longtable}{|p{1cm}|p{4cm}|p{8.5cm}|c|}
         \hline
         ID & Name & Description & Moscow \\ \hline
-        F-01   & Automated brewing process & The beer machine needs to be able to automatically process the beer brewing process, through a user-friendly interface & M \\ \hline
-        F-02   & Recipe Management & Users should be able to pick between different kinds of beer they want the machine to process. & S \\ \hline
-        F-03   & Ingredients management & The machine should automatically use the ingredients needed to brew a specific beer recipe. & C \\ \hline
-        F-04   & Alerts and Notifications & Users should get alerts and notifications for the process if something fails or if the brewing of the beer was a success, or the machine needs maintenance. & M \\ \hline
-        F-05  & Data collection & The system needs to collect data of the different processes to ensure we can improve the quality the brewing and minimize bad processing. & S \\ \hline
-        F-06   & Cleaning and maintenance & The machine should contain a cleaning and maintenance program to ensure that the quality of the beer is in top.& M \\ \hline
-        R-01   & Reliability & The beer machine should operate consistently and with minimal failures to ensure beer quality. & M \\ \hline
-        S-01   & Scalability & The system should be able to scale if new recipes or features would be added to the machine. & C \\ \hline
-        U-01  & User-friendly design & To ensure that the process will be automated we need a user-friendly design with clear instructions and easy navigation to help the user brew beers. & M \\ \hline
-        P-01   & Performance & It is important that the application has quick response times and minimal failures during the brewing process. & M \\ \hline
-        R-02  & Data backup & The data needs to be stores in a database to ensure no data will get lost from the brewing process. & S \\ \hline
-        S-02   & Future Development & The program needs to be well structured, incase the application needs to be optimized or improved further & W \\ \hline
-        P-02   & Response time & The response time of the application needs to be quick to ensure the user can navigate through the application without any delays. & M \\ \hline
+        F-01   & Automated brewing process  & The beer machine needs to be able to automatically process the beer brewing process through a user-friendly interface.                                        & M \\ \hline
+        F-02   & Recipe Management          & Users should be able to pick between different kinds of beer they want the machine to produce.                                                                & S \\ \hline
+        F-03   & Ingredients management     & The machine should automatically use the ingredients needed to brew a specific beer recipe.                                                                   & C \\ \hline
+        F-04   & Alerts and Notifications   & Users should get alerts and notifications for the process if something fails, if the brewing of the beer was a success, or if the machine needs maintenance.   & C \\ \hline
+        F-05   & Data collection            & The system needs to collect data from the different processes to ensure that we can improve the quality the brewing and minimize bad processing.                     & S \\ \hline
+        F-06   & Cleaning and maintenance   & The machine should contain a cleaning and maintenance program to ensure that the quality of the beer is in top.                                               & M \\ \hline
+        F-07   & Low fail rate              & The machine must work at a speed that keeps the fail rate below 1\% if possible.                                                                                & M \\ \hline
+        U-01   & User-friendly design       & To ensure that the process will be automated, we need a user-friendly design with clear instructions and easy navigation to help the user brew beers.          & M \\ \hline
+        R-01   & Reliability                & The beer machine should operate consistently and with minimal failures to ensure beer quality.                                                                & M \\ \hline
+        R-02   & Data backup                & The data needs to be stored in a database to ensure that no data will get lost from the brewing process.                                                           & S \\ \hline
+        R-03   & Maintainability            & The design of the system should include well-documented code, apply modular design principles and meet industry-standard practices to ease future maintenance.      & S \\ \hline 
+        R-04   & Separation of Concerns     & The architecture of the system should separate the concerns through multiple deployments to enhance maintainability, scalability, and reliability.             & M \\ \hline
+        P-01   & Performance                & It is important that the application has a quick response time and minimal failures during the brewing process.                                                & M \\ \hline
+        P-02   & Response time              & The response time of the application needs to be quick to ensure that the user can navigate through the application without any delays.                            & M \\ \hline
+        S-01   & Scalability                & The system should be scalable if new recipes or features are added to the machine.                                                                  & C \\ \hline
+        S-02   & Future Development         & The program needs to be well structured in case the application needs to be optimized or improved further.                                                     & W \\ \hline
 
-        \caption{Requirements using FURPS model}
+        \caption{Requirements using FURPS+ model}
         \label{tab:requirements}
     \end{longtable}
 \end{center}
 
-The Table \ref{tab:requirements} shows the requirements for the beer machine. The requirements are based on the FURPS+ model, which is a model for classifying software quality attributes. For a better understanding we have seperated each requierments into their own category and given them a Moscow priority.
+Table \ref{tab:requirements} shows the requirements for the beer machine. The requirements are based on the FURPS+ model, which is a model for classifying software quality attributes. For a better understanding we have seperated each requirement into their own category and given them a MOSCOW priority.
 
 
 
