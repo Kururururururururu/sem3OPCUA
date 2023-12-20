@@ -11,7 +11,7 @@ This process can quickly become overwhelming and tedious, especially for newcome
 Our design goal is to make brewing easy and accessible to everyone, even for the least technical of people. We want to solve this issue by having a simple and clean user interface, without all the unnecessary information, where all the heavy calculations, continuous monitoring, and processing are done by software behind the scenes.\newline
 
 \subsection{System Architecture}
-The architecture of the system should be based on the client-server model and include three deployments: The web service, the database service, and the physical beer machine. \newline
+The architecture of the system should be based on the client-server model, to meet requirement R-04, and should include three deployments: The web service, the database service, and the physical beer machine. \newline
 The web service will consist of the frontend, the backend, and the OPC Client. There should be a direct line of communication between the user input in the user interface, through the data processing in the backend, to the OPC Client that will handle the secure communication and instructions to the physical beer machine. \newline
 The communication between the frontend, the backend, and the beer machine should be implemented using a RESTful API. \newline
 This deployment model should ensure a clear separation of concerns, allowing efficient future scaling, while easing the maintenance of individual components.
@@ -23,7 +23,7 @@ The library also offers a virtual DOM (Document Object Model), which is a lightw
 Lastly, it offered us a lot of flexibility in terms of state management, as the UI needs to be able to handle a lot of different states. This includes the different stages of the beer production process, but also the different states of the beer machine itself. This helped the project to meet requirement U-03, to develop a dynamic design, as the UI can be updated to reflect the current state of the beer machine and it's progress. \newline
 All these features, combined with the fact that it is a very popular and well-documented library, made it the perfect choice for the development of the user interface of the beer production system.
 \subsubsection{User Interface}
-To ensure we met requirement U-01, to develop a user-friendly design, we decided to develop a clean and simple user interface, without all the unnecessary information, to make it as easy as possible for the user to navigate and use the application. \newline
+To ensure we meet requirement U-01, to develop a user-friendly design, we decided to develop a clean and simple user interface, without all the unnecessary information, to make it as easy as possible for the user to navigate and use the application. \newline
 Therefore, an early draft of the user interface was drawn by hand to get a clear idea of the overall design and layout of the application. \newline
 \begin{center}
   \centering
@@ -60,7 +60,7 @@ Lastly, the backend should be able to \textit{READ} the data collected from the 
 The design choice of using a RESTful API for internal communication within the Web-Service, and its communication with the Beer Machine, allows for a clear separation of concerns, as each endpoint is responsible for a specific task, which in turn allows for a more efficient development process, as each endpoint and its logic can be developed and tested individually.
 
 \subsection{Simulation}
-The provided ARsim simulation tool early on into our development process should be at high priority for our project to reduce development time in terms of testing. 
+The provided ARsim simulation tool should be integrated early on into our development process should be at high priority for our project to reduce development time in terms of testing. 
 The early integration should allow us to speed up the development time from the very beginning, as most of our program's functionalities can be thoroughly tested directly without the need for direct access to the physical machine.
 As the tool will mimic the behavior of the beermachine, it should allow us to interact with ARsim in a manner similar to how our software would communicate with the actual machine, and also enable concurrent tests of multiple different things without interfering with one another.
 
