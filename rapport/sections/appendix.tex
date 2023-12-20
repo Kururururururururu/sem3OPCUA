@@ -9,13 +9,12 @@
         \caption{All the data gathered from the tests}
         \label{fig:datacollection}
     \end{figure}
-  \end{center}
+\end{center}
 
 \newpage
 \subsubsection{Appendix 2 (OPC-client.js)}
-
 \begin{center}
-    \begin{minted}[linenos, breaklines, firstnumber=last]{javascript}
+    \begin{minted}[linenos, breaklines, firstnumber=1,baselinestretch=1.2,breakanywhere]{javascript}
         const { OPCUAClient, DataType, AttributeIds, WriteValueOptions, ClientSubscription } = require('node-opcua-client')
         const { MonitoringMode } = require('node-opcua-types')
         const { TimestampsToReturn } = require('node-opcua-data-value')
@@ -468,7 +467,7 @@
 \newpage
 \subsubsection{Appendix 3 (Index.js)}
 \begin{center}
-    \begin{minted}[linenos, breaklines, firstnumber=last]{javascript}
+    \begin{minted}[linenos, breaklines, firstnumber=1,baselinestretch=1.2]{javascript}
         const path = require('path')
         const express = require('express')
         const opcuaClient = require('./OPC/OPC_client')
@@ -592,7 +591,7 @@
 \newpage
 \subsubsection{Appendix 4 (App.jsx)}
 \begin{center}
-    \begin{minted}[linenos, breaklines, firstnumber=last]{jsx}
+    \begin{minted}[linenos, breaklines, firstnumber=1,baselinestretch=1.2]{jsx}
         import { useEffect, useState } from 'react'
         import Button from './components/button'
         import Dropdown from './components/dropdown'
@@ -700,7 +699,7 @@
 \newpage
 \subsubsection{Appendix 5 (Temp.jsx)}
 \begin{center}
-    \begin{minted}[linenos, breaklines, firstnumber=last]{jsx}
+    \begin{minted}[linenos, breaklines, firstnumber=1,baselinestretch=1.2]{jsx}
         import { useEffect, useState } from 'react'
         import BeerButtons from './components/beer-components/button/beer-buttons.jsx'
         import BeerContainers from './components/beer-components/container/beer-containers.jsx'
@@ -782,7 +781,7 @@
 \newpage
 \subsubsection{Appendix 6 (db.js)}
 \begin{center}
-    \begin{minted}[linenos, breaklines, firstnumber=last]{javascript}
+    \begin{minted}[linenos, breaklines, firstnumber=1,baselinestretch=1.2]{javascript}
         const { Pool } = require('pg')
         require('dotenv').config()
 
