@@ -8,15 +8,11 @@ WORKDIR /app
 COPY backend /app/backend
 
 # Copy the dist folder from the frontend directory
-COPY frontend /app/frontend
+COPY frontend/dist /app/frontend/dist
 
 # Install dependencies in backend directory and then frontend directory
 WORKDIR /app/backend
 RUN npm install
-
-WORKDIR /app/frontend
-RUN npm install
-RUN npm run build
 
 WORKDIR /app/backend/OPC
 RUN npm install
