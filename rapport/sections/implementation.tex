@@ -115,7 +115,7 @@ It is responsible for making a brewing order. It first checks if the state is in
 which is the state it is in, when it is brewing. If it is, then it will throw an error, 
 as it is not possible to brew, when it is already brewing. Otherwise, it will brew the beer, 
 and if it is successful, it will send a status code of 200, which means OK. Otherwise, 
-it will send a status code of 418, which means "I'm a teapot. This is just a joke". 
+it will send a status code of 418.
 But it is a valid status code, so we decided to use it.
 
 \subsubsubsection{OPC\_client.js}
