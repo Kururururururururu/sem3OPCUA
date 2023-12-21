@@ -110,7 +110,13 @@ Our most essential API endpoint is our POST request, as it is the one to make a 
         \label{fig:pass_to_queue_api}
     \end{figure}
 \end{center}
-Figure \ref{fig:pass_to_queue_api} shows the code for our \textit{POST} endpoint. It is responsible for making a brewing order. It first checks if the state is in \textit{execute}, which is the state it is in, when it is brewing. If it is, then it will throw an error, as it is not possible to brew, when it is already brewing. Otherwise, it will brew the beer, and if it is successful, it will send a status code of 200, which means OK. Otherwise, it will send a status code of 418, which means "I'm a teapot. This is just a joke". But it is a valid status code, so we decided to use it.
+Figure \ref{fig:pass_to_queue_api} shows the code for our \textit{POST} endpoint. 
+It is responsible for making a brewing order. It first checks if the state is in \textit{execute}, 
+which is the state it is in, when it is brewing. If it is, then it will throw an error, 
+as it is not possible to brew, when it is already brewing. Otherwise, it will brew the beer, 
+and if it is successful, it will send a status code of 200, which means OK. Otherwise, 
+it will send a status code of 418.
+But it is a valid status code, so we decided to use it.
 
 \subsubsubsection{OPC\_client.js}
 
